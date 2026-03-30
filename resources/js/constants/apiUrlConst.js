@@ -7,3 +7,5 @@ const API_URL_CONST = {
     LOGIN: '/api/login',
 
 }
+
+export default API_URL_CONST;

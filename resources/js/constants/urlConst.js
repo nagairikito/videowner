@@ -10,3 +10,5 @@ const URL_CONST = {
     LOGIN: '/login',
 
 }
+
+export default URL_CONST;

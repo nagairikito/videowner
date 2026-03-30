@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import { API_URL_CONST } from 'constants/apiUrlConst.js';
-import { URL_CONST } from 'constants/urlConst.js';
+import API_URL_CONST from '../constants/apiUrlConst.js';
+import URL_CONST from '../constants/urlConst.js';
 
 const Login = () => {
 
@@ -67,4 +67,4 @@ const Login = () => {
     );
 }
 
-export default Signup;
+export default Login;

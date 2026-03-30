@@ -1,4 +1,4 @@
-import { URL_COSNT } from 'constants/urlConst.js';
+import URL_CONST from '../../constants/urlConst.js';
 
 const Header = () => {
     return(

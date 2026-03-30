@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\SignupService;
 use App\Http\Requests\SignupRequest;
+use App\Constants\Bean;
+use Illuminate\Http\Request;
 
 /**
  * 新規ユーザー登録 Contorller
@@ -26,16 +28,17 @@ class SignupController extends Controller {
      * @param SignupRequest $request リクエスト
      * @return
      */
-    public function signup(SignupRequest $request) {
+    // public function signup(SignupRequest $request) {
+    public function signup(Request $request) {
         $data = [
             'userName' => $request['userName'],
             'loginId' => $request['loginId'],
             'password' => $request['password'],
-            'passwordConf' => $request['userName'],
+            'passwordConf' => $request['passwordConf'],
         ];
 
         $result = $this->service->signup($data);
 
-        return response()->json($result);
+        return response()->json($result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]));
     }
 }
