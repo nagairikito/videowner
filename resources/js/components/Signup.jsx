@@ -28,10 +28,14 @@ const Signup = () => {
         e.preventDefault();
 
         //バリデーション
+        const validMsgs = Bean.signupFormValidation(from);
+        if(validMsgs.length > 0) {
+            return; //バリデーションメッセージを描画する
+        }
 
         const response = await Bean.fetchApi(API_URL_CONST.SIGNUP, form);
         if(response.ok) {
-            navigate(URL_CONST.HOME);
+            navigate(URL_CONST.LOGIN);
         } else {
             const errorMsg = await response.json();
             console.log(errorMsg);

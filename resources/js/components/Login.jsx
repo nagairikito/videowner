@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import API_URL_CONST from '../constants/apiUrlConst.js';
 import URL_CONST from '../constants/urlConst.js';
+import Bean from '../constants/bean.jsx';
 
 const Login = () => {
 
@@ -10,6 +12,7 @@ const Login = () => {
         password: '',
     }
 
+    const navigate = useNavigate();
     const [form, setForm] = useState(initialForm);
 
     const handleChange = (e) => {
@@ -24,11 +27,12 @@ const Login = () => {
 
         //バリデーション
 
-        const response = await fetchApi(API_URL_CONST.LOGIN, form);
+        const response = await Bean.fetchApi(API_URL_CONST.SIGNUP, form);
         if(response.ok) {
-
+            navigate(URL_CONST.HOME);
         } else {
-
+            const errMsg = response.json();
+            console.log(errMsg);
         }
 
 
