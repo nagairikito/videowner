@@ -18,6 +18,7 @@ const Signup = () => {
     const isFirstRender = useRef(true);
     const [form, setForm] = useState(initialForm);
     const [validMsgs, setValidMsgs] = useState({});
+    const [errMsg, setErrMsg] = useState("");
 
     const handleChange = (e) => {
         setForm({
@@ -41,10 +42,9 @@ const Signup = () => {
 
         //バリデーション
         const resultValidMsg = Bean.signupFormValidation(form);
-        // if(resultValidMsg.length > 0) {
         if (Object.keys(resultValidMsg).length > 0) {
             setValidMsgs(resultValidMsg);
-            return; //バリデーションメッセージを描画する
+            return;
         }
 
         const response = await Bean.fetchApi(API_URL_CONST.SIGNUP, form);
@@ -52,7 +52,7 @@ const Signup = () => {
             navigate(URL_CONST.LOGIN);
         } else {
             const errorMsg = await response.json();
-            console.log(errorMsg);
+            setErrMsg(errorMsg.resErrMsg);
         }
     }
 
@@ -86,6 +86,7 @@ const Signup = () => {
                     <input type="password" id="passwordConf" name="passwordConf" onChange={handleChange}/>
                 </div>
                 <input type="submit" value="登録" onClick={handleSubmit} />
+                { errMsg !== "" && (<div>{errMsg}</div>)}
             </form>
             <div>
                 <a href={URL_CONST.LOGIN}>ログインへ</a>

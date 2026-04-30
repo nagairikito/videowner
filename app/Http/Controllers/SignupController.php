@@ -28,8 +28,7 @@ class SignupController extends Controller {
      * @param SignupRequest $request リクエスト
      * @return
      */
-    // public function signup(SignupRequest $request) {
-    public function signup(Request $request) {
+    public function signup(SignupRequest $request) {
         $data = [
             'userName' => $request['userName'],
             'loginId' => $request['loginId'],
@@ -37,8 +36,9 @@ class SignupController extends Controller {
             'passwordConf' => $request['passwordConf'],
         ];
 
-        $result = $this->service->signup($data);
+        // $result = $this->service->signup($data);
 
-        return response()->json($result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]));
+        // return $result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]);
+        return Bean::responseFailure();
     }
 }

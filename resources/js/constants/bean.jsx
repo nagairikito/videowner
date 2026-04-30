@@ -35,8 +35,8 @@ const Bean = {
 
         // ユーザー名
         if(data.userName.trim() === "" || data.userName === "undefined"
-        || data.userName.length <= 100) {
-            validMesgs = Bean.addValue(validMesgs, 'userName', 'ユーザー名は100文字以下で入力してください。');
+        || data.userName.length > 255) {
+            validMesgs = Bean.addValue(validMesgs, 'userName', 'ユーザー名は255文字以下で入力してください。');
         }
         if (!/^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-zA-Z0-9._-]+$/u.test(data.userName)) {
             validMesgs = Bean.addValue(validMesgs, 'userName', '漢字、ひらがな、カタカナ、英数字、記号（「.」「_」「-」）で入力してください。');
@@ -44,7 +44,7 @@ const Bean = {
 
         // ログインID
         if(data.loginId.trim() === "" || data.loginId === "undefined"
-        || data.loginId.length <= 8 || data.loginId.length >= 32) {
+        || data.loginId.length < 8 || data.loginId.length > 32) {
             validMesgs = Bean.addValue(validMesgs, 'loginId', 'ログインIDは8文字以上32文字以下で入力してください。');
         }
         if(!/^[\x21-\x7E]+$/.test(data.loginId)) {
@@ -53,7 +53,7 @@ const Bean = {
 
         //パスワード
         if(data.password.trim() === "" || data.password === "undefined"
-        || data.password.length <= 8 || data.password.length >= 32) {
+        || data.password.length < 8 || data.password.length > 32) {
             validMesgs = Bean.addValue(validMesgs, 'password', 'パスワードは8文字以上32文字以下で入力してください。');
         }
         if(!/^[\x21-\x7E]+$/.test(data.password)) {

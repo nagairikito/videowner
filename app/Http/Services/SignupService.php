@@ -3,7 +3,7 @@
 namespace App\Http\Services;
 
 use App\Http\Repositories\UserRepository;
-use App\Constants\ErrorMessage;
+use App\Constants\Message;
 
 /**
  * 新規ユーザー登録 Service
@@ -30,14 +30,14 @@ class SignupService extends Service {
 
         $userOpt = $this->repository->getUserByLoginId($data['loginId']);
         if($userOpt != null) {
-            return [false, ErrorMessage::SIGNUP["ALREADY_USER_EXISTED"]];
+            return [false, Message::SIGNUP["ALREADY_USER_EXISTED"]];
         }
 
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
 
         $result = $this->repository->signup($data);
         if(!$result) {
-            return [false, ErrorMessage::SIGNUP["SIGNUP_FAILURE"]];
+            return [false, Message::SIGNUP["SIGNUP_FAILURE"]];
         }
 
         return [true, ""];

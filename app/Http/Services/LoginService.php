@@ -3,7 +3,7 @@
 namespace App\Http\Services;
 
 use App\Http\Repositories\UserRepository;
-use App\Constants\ErrorMessage;
+use App\Constants\Message;
 
 /**
  * 新規ユーザー登録 Service

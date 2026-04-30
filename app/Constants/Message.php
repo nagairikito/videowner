@@ -2,7 +2,7 @@
 
 namespace App\Constants;
 
-class ErrorMessage {
+class Message {
 
     // 新規ユーザー登録
     const SIGNUP = [
