@@ -34,10 +34,10 @@ class UserRepository extends Repository {
     /**
      * ユーザー登録処理
      * 
-     * @param $data 入力情報
+     * @param array $data 入力情報
      * @return bool 登録結果（成功ならtrue、失敗ならfalse）
      */
-    public function signup($data) : bool {
+    public function signup(array $data) : bool {
         $this->user->user_name = $data['userName'];
         $this->user->login_id = $data['loginId'];
         $this->user->password = $data['password'];

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SignupRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class SignupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userName'               => 'required|string|max:255',
-            'loginId'                => 'required|unique:m_users,login_id|string|regex:/^[a-zA-Z0-9._-]+$/|min:8|max:32',
+            'loginId'                => 'required|string|regex:/^[a-zA-Z0-9._-]+$/|min:8|max:32',
             'password'               => 'required|string|regex:/^[a-zA-Z0-9._-]+$/|min:8|max:32',
         ];
     }
@@ -38,11 +37,7 @@ class SignupRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'userName.required'  => '名前は必須です',
-            'userName.string'    => '文字形式で入力してください',
-            'userName.max'       => '255文字以下で入力してください',
             'loginId.required'   => 'ログインIDは必須です',
-            'loginId.unique'     => 'このログインＩＤは既に使用されています',
             'loginId.string'     => '文字形式で入力してください',
             'loginId.regex'      => '「英数字」「.」「-」「_」のみ使用できます',
             'loginId.min'        => '8文字以上で入力してください',

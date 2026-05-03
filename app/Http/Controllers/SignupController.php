@@ -36,9 +36,8 @@ class SignupController extends Controller {
             'passwordConf' => $request['passwordConf'],
         ];
 
-        // $result = $this->service->signup($data);
+        $result = $this->service->signup($data);
 
-        // return $result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]);
-        return Bean::responseFailure();
+        return $result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]);
     }
 }

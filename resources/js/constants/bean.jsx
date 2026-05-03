@@ -1,3 +1,5 @@
+import MESSAGE from "./message";
+
 /**
  * 共通処理オブジェクト
  */
@@ -36,31 +38,63 @@ const Bean = {
         // ユーザー名
         if(data.userName.trim() === "" || data.userName === "undefined"
         || data.userName.length > 255) {
-            validMesgs = Bean.addValue(validMesgs, 'userName', 'ユーザー名は255文字以下で入力してください。');
+            validMesgs = Bean.addValue(validMesgs, 'userName', MESSAGE.SIGNUP.USER_NAME.REQUIRED);
         }
         if (!/^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-zA-Z0-9._-]+$/u.test(data.userName)) {
-            validMesgs = Bean.addValue(validMesgs, 'userName', '漢字、ひらがな、カタカナ、英数字、記号（「.」「_」「-」）で入力してください。');
+            validMesgs = Bean.addValue(validMesgs, 'userName', MESSAGE.SIGNUP.USER_NAME.CHARTYPE);
         }
 
         // ログインID
         if(data.loginId.trim() === "" || data.loginId === "undefined"
         || data.loginId.length < 8 || data.loginId.length > 32) {
-            validMesgs = Bean.addValue(validMesgs, 'loginId', 'ログインIDは8文字以上32文字以下で入力してください。');
+            validMesgs = Bean.addValue(validMesgs, 'loginId', MESSAGE.SIGNUP.LOGIN_ID.REQUIRED);
         }
-        if(!/^[\x21-\x7E]+$/.test(data.loginId)) {
-            validMesgs = Bean.addValue(validMesgs, 'loginId', 'ログインIDは半角英数字、記号で入力してください。');
+        if(!/^[a-zA-Z0-9._-]+$/.test(data.loginId)) {
+            validMesgs = Bean.addValue(validMesgs, 'loginId', MESSAGE.SIGNUP.LOGIN_ID.CHARTYPE);
         }
 
         //パスワード
         if(data.password.trim() === "" || data.password === "undefined"
         || data.password.length < 8 || data.password.length > 32) {
-            validMesgs = Bean.addValue(validMesgs, 'password', 'パスワードは8文字以上32文字以下で入力してください。');
+            validMesgs = Bean.addValue(validMesgs, 'password', MESSAGE.SIGNUP.PASSWORD.REQUIRED);
         }
-        if(!/^[\x21-\x7E]+$/.test(data.password)) {
-            validMesgs = Bean.addValue(validMesgs, 'password', 'パスワードは半角英数字、記号で入力してください。');
+        if(!/^[a-zA-Z0-9._-]+$/.test(data.password)) {
+            validMesgs = Bean.addValue(validMesgs, 'password', MESSAGE.SIGNUP.PASSWORD.CHARTYPE);
         }
         if(data.password !== data.passwordConf) {
-            validMesgs = Bean.addValue(validMesgs, 'password', 'パスワードと確認用パスワードが一致しません。');
+            validMesgs = Bean.addValue(validMesgs, 'password', MESSAGE.SIGNUP.PASSWORD.MISMATCH);
+        }
+
+        return validMesgs;
+    },
+
+    /**
+     * ログインフォームバリデーション
+     * 
+     * @param {Object} data フォームの入力情報
+     * @return {Array} バリデーションメッセージ
+     */
+    loginFormValidation: (data) => {
+
+        // バリデーションメッセージ
+        let validMesgs = {};
+
+        // ログインID
+        if(data.loginId.trim() === "" || data.loginId === "undefined"
+        || data.loginId.length < 8 || data.loginId.length > 32) {
+            validMesgs = Bean.addValue(validMesgs, 'loginId', MESSAGE.SIGNUP.LOGIN_ID.REQUIRED);
+        }
+        if(!/^[a-zA-Z0-9._-]+$/.test(data.loginId)) {
+            validMesgs = Bean.addValue(validMesgs, 'loginId', MESSAGE.SIGNUP.LOGIN_ID.CHARTYPE);
+        }
+
+        //パスワード
+        if(data.password.trim() === "" || data.password === "undefined"
+        || data.password.length < 8 || data.password.length > 32) {
+            validMesgs = Bean.addValue(validMesgs, 'password', MESSAGE.SIGNUP.PASSWORD.REQUIRED);
+        }
+        if(!/^[a-zA-Z0-9._-]+$/.test(data.password)) {
+            validMesgs = Bean.addValue(validMesgs, 'password', MESSAGE.SIGNUP.PASSWORD.CHARTYPE);
         }
 
         return validMesgs;

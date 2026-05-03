@@ -10,7 +10,7 @@ use App\Constants\Message;
  */
 class SignupService extends Service {
     
-    /** 新規ユーザー登録 Repository */
+    /** ユーザー Repository */
     private UserRepository $repository;
 
     /**
@@ -23,10 +23,10 @@ class SignupService extends Service {
     /**
      * 新規ユーザー登録
      * 
-     * @param $data 入力情報
+     * @param array $data 入力情報
      * @return array 登録結果(成功：true、失敗：false), 成功：空文字、失敗：エラーメッセージ
      */
-    public function signup($data) {
+    public function signup(array $data) : array {
 
         $userOpt = $this->repository->getUserByLoginId($data['loginId']);
         if($userOpt != null) {
@@ -40,6 +40,6 @@ class SignupService extends Service {
             return [false, Message::SIGNUP["SIGNUP_FAILURE"]];
         }
 
-        return [true, ""];
+        return [true, Message::SIGNUP["SIGNUP_SUCCESS"]];
     }
 }

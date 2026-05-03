@@ -8,11 +8,11 @@ use App\Constants\Bean;
 use Illuminate\Http\Request;
 
 /**
- * 新規ユーザー登録 Contorller
+ * ログイン Contorller
  */
 class LoginController extends Controller {
     
-    /** 新規ユーザー登録 Service */
+    /** ログイン Service */
     private LoginService $service;
 
     /**
@@ -23,15 +23,19 @@ class LoginController extends Controller {
     }
 
     /**
-     * 新規ユーザー登録
+     * ログイン
      * 
      * @param LoginRequest $request リクエスト
      * @return
      */
-    public function login(Request $request) {
+    public function login(LoginRequest $request) {
+        $data = [
+            'loginId' => $request->loginId,
+            'password' => $request->password,
+        ];
 
-        $result = true;
+        $result = $this->service->login($data);
 
-        return response()->json($result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]));
+        return $result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]);
     }
 }

@@ -4,13 +4,15 @@ namespace App\Http\Services;
 
 use App\Http\Repositories\UserRepository;
 use App\Constants\Message;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 /**
- * 新規ユーザー登録 Service
+ * ログイン Service
  */
 class LoginService extends Service {
     
-    /** 新規ユーザー登録 Repository */
+    /** ユーザー Repository */
     private UserRepository $repository;
 
     /**
@@ -21,13 +23,38 @@ class LoginService extends Service {
     }
 
     /**
-     * 新規ユーザー登録
+     * ログイン
      * 
-     * @param $data 入力情報
-     * @return array 登録結果(成功：true、失敗：false), 成功：空文字、失敗：エラーメッセージ
+     * @param array $data 入力情報
+     * @return mixed 登録結果(成功：true、失敗：false), 成功：ユーザー情報、失敗：エラーメッセージ
      */
-    public function login($data) {
+    public function login(array $data) : array {
+        $userOpt = $this->repository->getUserByLoginId($data['loginId']);
+        if($userOpt == null) {
+            return [false, Message::LOGIN["USER_NONEXISTED"]];
+        }
 
-        return [true, ""];
+        if(!Hash::check($data['password'], $userOpt->password)) {
+            return [false, Message::LOGIN["LOGIN_OR_PASSWORD_MISMATCH"]];
+        }
+
+        $credentials = [
+            'login_id' => $data['loginId'],
+            'password' => $data['password'],
+        ];
+        
+        if(!Auth::attempt($credentials)) {
+            return [false, Message::LOGIN["LOGIN_FAILURE"]];
+        }
+
+        $exportData = [
+            'loginSuccess' => Message::LOGIN["LOGIN_SUCCESS"],
+            'loginUser' => [
+                'userName' => Auth::user()->user_name,
+                'loginId' => Auth::user()->login_id,
+            ],
+        ];
+
+        return [true, $exportData];
     }
 }

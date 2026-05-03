@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { AuthContext } from '../app.jsx';
 import API_URL_CONST from '../constants/apiUrlConst.js';
 import URL_CONST from '../constants/urlConst.js';
 import Bean from '../constants/bean.jsx';
@@ -13,59 +14,73 @@ const Login = () => {
     }
 
     const navigate = useNavigate();
+    const { setLoginUser } = useContext(AuthContext);
+    const isFirstRender = useRef(true);
     const [form, setForm] = useState(initialForm);
+    const [validMsgs, setValidMsgs] = useState({});
+    const [errMsg, setErrMsg] = useState("");
 
     const handleChange = (e) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value,
-        })
+        });
     }
 
+    useEffect(() => {
+        if(isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
+        const resultValidMsg = Bean.loginFormValidation(form);
+        setValidMsgs(resultValidMsg);
+    }, [form]);
+    
     const handleSubmit = async(e) => {
         e.preventDefault();
 
         //バリデーション
-
-        const response = await Bean.fetchApi(API_URL_CONST.SIGNUP, form);
-        if(response.ok) {
-            navigate(URL_CONST.HOME);
-        } else {
-            const errMsg = response.json();
-            console.log(errMsg);
+        const resultValidMsg = Bean.loginFormValidation(form);
+        if (Object.keys(resultValidMsg).length > 0) {
+            setValidMsgs(resultValidMsg);
+            return;
         }
 
-
+        const response = await Bean.fetchApi(API_URL_CONST.LOGIN, form);
+        const resResult = await response.json();
+        if(response.ok) {
+            setLoginUser(resResult);
+            navigate(URL_CONST.HOME);
+        } else {
+            // const errorMsg = await response.json();
+            setErrMsg(resResult.resErrMsg);
+        }
     }
 
-    const fetchApi = (url, data) => {
-        const response = fetch(url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            }
-        )
-
-        return response;
-    }
 
     return(
         <div className="login-form">
             <form>
                 <div className="input-box">
                     <label htmlFor="loginId">ログインID</label>
-                    <input type="text" name="loginId" onChange={handleChange}/>
+                    <input type="text" id="loginId" name="loginId" onChange={handleChange}/>
+                    { (validMsgs.loginId?.length > 0) && validMsgs.loginId.map((msg, key) => (
+                        <div key={key}>{msg}</div>
+                    )) }
                 </div>
                 <div className="input-box">
                     <label htmlFor="password">パスワード</label>
-                    <input type="password" name="password" onChange={handleChange}/>
+                    <input type="password" id="password" name="password" onChange={handleChange}/>
+                    { (validMsgs.password?.length > 0) && validMsgs.password.map((msg, key) => (
+                        <div key={key}>{msg}</div>
+                    )) }
                 </div>
                 <input type="submit" value="ログイン" onClick={handleSubmit} />
+                { errMsg !== "" && (<div>{errMsg}</div>)}
             </form>
             <div>
-                <a href={URL_CONST.SIGNUP}>新規ユーザー登録へ</a>
+                <a href={URL_CONST.SIGNUP}>新規登録はこちら</a>
             </div>
         </div>
     );
