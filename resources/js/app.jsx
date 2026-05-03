@@ -3,9 +3,10 @@ import React from 'react';
 // import ReactDOM from 'react/client'
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { useState, createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
 
 import URL_CONST from './constants/urlConst';
+import Bean from './constants/bean';
 import Header from './components/common/Header';
 import Home from './components/Home';
 import Signup from './components/Signup';
@@ -15,6 +16,23 @@ export const AuthContext = createContext();
 
 function App() {
     const [loginUser, setLoginUser] = useState(null);
+        console.log(loginUser);
+    useEffect(() => {
+        const fetchUser = async() => {
+            const res = fetch(URL_CONST.LOGIN_USER, {
+                credentials: 'include'
+            });
+
+            if(res.ok) {
+                const resRusult = await res.json();
+                setLoginUser(resRusult);
+            } else {
+                setLoginUser(null);
+            }
+        };
+
+        fetchUser();
+    }, []);
 
     return (
         <>

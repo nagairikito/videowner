@@ -5,16 +5,15 @@ import URL_CONST from '../../constants/urlConst.js';
 
 const Header = () => {
     const { loginUser } = useContext(AuthContext);
-    
+    console.log(loginUser)
     return(
         <header>
             <div className="header-wrapper">
-                { loginUser?.userName ?
-                    <span>{loginUser.userName}</span> 
+                { loginUser.userName ?
+                    <div>{loginUser.userName}</div> 
                 : 
                     <a href={URL_CONST.LOGIN}>ログイン</a>
                 }
-                {/* <a href={URL_CONST.LOGIN}>ログイン</a> */}
             </div>
         </header>
     );

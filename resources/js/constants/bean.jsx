@@ -6,7 +6,7 @@ import MESSAGE from "./message";
 const Bean = {
 
     /**
-     * APIにアクセス
+     * APIにアクセス(POST)
      * 
      * @param {string} url APIのURL
      * @param {Object} data データ
@@ -15,6 +15,7 @@ const Bean = {
     fetchApi: async (url, data) => {
         const response = await fetch(url, {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -22,6 +23,27 @@ const Bean = {
             }
         );
         return response;
+    },
+
+    /**
+     * APIにアクセス(GET)
+     * 
+     * @param {string} url APIのURL
+     * @param {Object} data データ
+     * @returns {Object} レスポンス
+     */
+    getFetchApi: async (url) => {
+        const response = await fetch(url, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        let t = await response.json()
+        console.log(t)
+        return t;
     },
 
     /**

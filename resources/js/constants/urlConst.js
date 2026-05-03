@@ -1,5 +1,8 @@
 const URL_CONST = {
 
+    // ログインユーザー取得
+    LOGIN_USER: '/loginuser',
+
     // ホーム
     HOME: '/',
 
