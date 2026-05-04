@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useState, useEffect, createContext } from 'react';
 
+import API_URL_CONST from './constants/apiUrlConst';
 import URL_CONST from './constants/urlConst';
 import Bean from './constants/bean';
 import Header from './components/common/Header';
@@ -15,28 +16,31 @@ import Login from './components/Login';
 export const AuthContext = createContext();
 
 function App() {
-    const [loginUser, setLoginUser] = useState(null);
-        console.log(loginUser);
+    const [loginUserRes, setLoginUserRes] = useState(null);
+
     useEffect(() => {
         const fetchUser = async() => {
-            const res = fetch(URL_CONST.LOGIN_USER, {
+            const res = await fetch(API_URL_CONST.LOGIN_USER, {
                 credentials: 'include'
             });
 
             if(res.ok) {
                 const resRusult = await res.json();
-                setLoginUser(resRusult);
+                console.log(resRusult)
+                setLoginUserRes(resRusult);
             } else {
-                setLoginUser(null);
+                setLoginUserRes(null);
             }
         };
 
-        fetchUser();
+        if(loginUserRes != null) {
+            fetchUser();
+        }
     }, []);
 
     return (
         <>
-        <AuthContext.Provider value={{ loginUser, setLoginUser }}>
+        <AuthContext.Provider value={{ loginUserRes, setLoginUserRes }}>
             <BrowserRouter>
                 <Header />
                 <Routes>

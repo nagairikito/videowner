@@ -29,5 +29,19 @@ class Bean {
 
         return response()->json($data, 500);
     }
+
+    /**
+     * レスポンス(認証なし)
+     * 
+     *  @param string $message エラーメッセージ
+     *  @return String エラーメッセージ、レスポンスコード(500)
+     */
+    public static function responseNoAuth(string $message = Message::RESPONSE["NO_AUTH_MSG"]) {
+        $data = [
+            "resErrMsg" => $message,
+        ];
+
+        return response()->json($data, 401);
+    }
         
 }

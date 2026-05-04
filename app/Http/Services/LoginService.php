@@ -6,6 +6,7 @@ use App\Http\Repositories\UserRepository;
 use App\Constants\Message;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 /**
  * ログイン Service
@@ -48,7 +49,7 @@ class LoginService extends Service {
         }
 
         $exportData = [
-            'loginSuccess' => Message::LOGIN["LOGIN_SUCCESS"],
+            'loginMessage' => Message::LOGIN["LOGIN_SUCCESS"],
             'loginUser' => [
                 'userName' => Auth::user()->user_name,
                 'loginId' => Auth::user()->login_id,

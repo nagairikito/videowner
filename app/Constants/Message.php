@@ -7,6 +7,7 @@ class Message {
     // レスポンス
     const RESPONSE = [
         "DEFAULT_ERR_MSG" => "エラーが発生しました。",
+        "NO_AUTH_MSG" => "ログイン認証の確認ができません。",
     ];
 
     // 新規ユーザー登録

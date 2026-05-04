@@ -14,7 +14,7 @@ const Login = () => {
     }
 
     const navigate = useNavigate();
-    const { setLoginUser } = useContext(AuthContext);
+    const { loginUserRes, setLoginUserRes } = useContext(AuthContext);
     const isFirstRender = useRef(true);
     const [form, setForm] = useState(initialForm);
     const [validMsgs, setValidMsgs] = useState({});
@@ -50,7 +50,7 @@ const Login = () => {
         const response = await Bean.fetchApi(API_URL_CONST.LOGIN, form);
         const resResult = await response.json();
         if(response.ok) {
-            setLoginUser(resResult);
+            setLoginUserRes(resResult);
             navigate(URL_CONST.HOME);
         } else {
             // const errorMsg = await response.json();

@@ -4,13 +4,13 @@ import { AuthContext } from '../../app.jsx';
 import URL_CONST from '../../constants/urlConst.js';
 
 const Header = () => {
-    const { loginUser } = useContext(AuthContext);
-    console.log(loginUser)
+    const { loginUserRes, setLoginUserRes } = useContext(AuthContext);
+
     return(
         <header>
             <div className="header-wrapper">
-                { loginUser.userName ?
-                    <div>{loginUser.userName}</div> 
+                { loginUserRes?.loginUser?.userName ?
+                    <div>{loginUserRes.loginUser.userName}</div> 
                 : 
                     <a href={URL_CONST.LOGIN}>ログイン</a>
                 }

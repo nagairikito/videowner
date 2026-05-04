@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants\Bean;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Log;
 
 /**
  * ログイン Contorller
@@ -19,14 +19,20 @@ class LoginUserController extends Controller {
      * @return
      */
     public function getLoginUser(Request $request) {
-        // if(Auth::user()) {
-        //     $loginUser = [
-        //         'userName' => Auth::user()->userName,
-        //         'loginId' => Auth::user()->loginId,
-        //     ];
+        // $loginUserOpt = $request->user();
 
-        //     return Bean::responseSuccess($loginUser);
-        // }
-        return $request->user();
+        $loginUser = [];
+        if(Auth::check()) {
+            $loginUser = [
+                'loginMessage' => '認証済',
+                'loginUser' => [
+                    'userName' => Auth::user()->user_name,
+                    'loginId' => Auth::user()->login_id,
+                ],
+            ];
+        } 
+
+        // return $loginUserOpt != null ? Bean::responseSuccess($loginUserOpt) : Bean::responseNoAuth() ;
+        return $loginUser != [] ? Bean::responseSuccess($loginUser) : Bean::responseNoAuth() ;
     }
 }
