@@ -33,6 +33,33 @@ const MESSAGE = {
         },
     },
 
+    // 動画投稿フォーム
+    POST_MOVIE: {
+        TITLE: {
+            REQUIRED: 'ユーザー名は255文字以下で入力してください。',
+            CHARTYPE: 'ログインIDは半角英数字、記号（「.」「_」「-」）で入力してください。',
+        },
+        THUMBNAIL: {
+            NAME: {
+                REQUIRED: 'ユーザー名は255文字以下で入力してください。',
+                CHARTYPE: 'ログインIDは半角英数字、記号（「.」「_」「-」）で入力してください。',
+            },
+            FILE: {
+                MIMETYPE: '画像形式のファイルを選択してください。',
+            }
+        },
+        CONTENTS: {
+            NAME: {
+                REQUIRED: 'ユーザー名は255文字以下で入力してください。',
+                CHARTYPE: 'ログインIDは半角英数字、記号（「.」「_」「-」）で入力してください。',
+            },
+            FILE: {
+                REQUIRED: 'ファイルを選択してください。',
+                MIMETYPE: '画像形式のファイルを選択してください。',
+            }
+        },
+    },
+
 }
 
 export default MESSAGE;

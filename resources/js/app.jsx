@@ -12,6 +12,8 @@ import Header from './components/common/Header';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import PostMovie from './components/PostMovie';
+import ProtectedRoute from './middleware/ProtectedRoute';
 
 export const AuthContext = createContext();
 
@@ -26,16 +28,13 @@ function App() {
 
             if(res.ok) {
                 const resRusult = await res.json();
-                console.log(resRusult)
                 setLoginUserRes(resRusult);
             } else {
                 setLoginUserRes(null);
             }
         };
 
-        if(loginUserRes != null) {
-            fetchUser();
-        }
+        fetchUser();
     }, []);
 
     return (
@@ -44,9 +43,14 @@ function App() {
             <BrowserRouter>
                 <Header />
                 <Routes>
-                    <Route path={URL_CONST.HOME} element={<Home />} /> 
-                    <Route path={URL_CONST.SIGNUP} element={<Signup />} /> 
-                    <Route path={URL_CONST.LOGIN} element={<Login />} /> 
+                    <Route path={URL_CONST.HOME} element={<Home />} />
+                    <Route path={URL_CONST.SIGNUP} element={<Signup />} />
+                    <Route path={URL_CONST.LOGIN} element={<Login />} />
+
+                    {/* ログイン認証時 */}
+                    <Route element={<ProtectedRoute />}>
+                        <Route path={URL_CONST.POST_MOVIE} element={<PostMovie />} />
+                    </Route>
                 </Routes>
             </BrowserRouter>
         </AuthContext.Provider>

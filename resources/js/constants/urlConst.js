@@ -9,6 +9,9 @@ const URL_CONST = {
     // ログイン
     LOGIN: '/login',
 
+    // 動画投稿フォーム
+    POST_MOVIE: '/post_movie',
+
 }
 
 export default URL_CONST;

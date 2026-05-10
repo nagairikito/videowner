@@ -41,9 +41,7 @@ const Bean = {
                 },
             }
         );
-        let t = await response.json()
-        console.log(t)
-        return t;
+        return await response.json();
     },
 
     /**
@@ -117,6 +115,59 @@ const Bean = {
         }
         if(!/^[a-zA-Z0-9._-]+$/.test(data.password)) {
             validMesgs = Bean.addValue(validMesgs, 'password', MESSAGE.SIGNUP.PASSWORD.CHARTYPE);
+        }
+
+        return validMesgs;
+    },
+
+    /**
+     * 動画投稿フォームバリデーション
+     * 
+     * @param {Object} data フォームの入力情報
+     * @return {Array} バリデーションメッセージ
+     */
+    postMovieForm: (data) => {
+
+        // バリデーションメッセージ
+        let validMesgs = {};
+
+        // タイトル
+        if(data.title.trim() === "" || data.title === "undefined"
+        || data.title.length > 255) {
+            validMesgs = Bean.addValue(validMesgs, 'title', MESSAGE.SIGNUP.USER_NAME.REQUIRED);
+        }
+        if (!/^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-zA-Z0-9._-]+$/u.test(data.title)) {
+            validMesgs = Bean.addValue(validMesgs, 'title', MESSAGE.SIGNUP.USER_NAME.CHARTYPE);
+        }
+
+        // サムネイル
+        if(data.thumbnail.file !== "") {
+            if (!data.thumbnail.file.type.startsWith('image/')) {
+                validMesgs = Bean.addValue(validMesgs, 'thumbnail', MESSAGE.POST_MOVIE.THUMBNAIL.FILE.MIMETYPE);
+            }
+            if(data.thumbnail.name.trim() === "" || data.thumbnail.name === "undefined"
+            || data.thumbnail.name.length > 255) {
+                validMesgs = Bean.addValue(validMesgs, 'thumbnail', MESSAGE.POST_MOVIE.THUMBNAIL.NAME.REQUIRED);
+            }
+            if (!/^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-zA-Z0-9._-]+$/u.test(data.thumbnail.name)) {
+                validMesgs = Bean.addValue(validMesgs, 'thumbnail', MESSAGE.POST_MOVIE.THUMBNAIL.NAME.CHARTYPE);
+            }
+        }
+
+        // コンテンツ
+        if(data.contents.file === "") {
+            validMesgs = Bean.addValue(validMesgs, 'contents', MESSAGE.POST_MOVIE.CONTENTS.FILE.REQUIRED);
+        } else {
+            if (!data.contents.file.type.startsWith('image/')) {
+                validMesgs = Bean.addValue(validMesgs, 'contents', MESSAGE.POST_MOVIE.CONTENTS.FILE.MIMETYPE);
+            }
+            if(data.contents.name.trim() === "" || data.contents.name === "undefined"
+            || data.contents.name.length > 255) {
+                validMesgs = Bean.addValue(validMesgs, 'contents', MESSAGE.POST_MOVIE.CONTENTS.NAME.REQUIRED);
+            }
+            if (!/^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-zA-Z0-9._-]+$/u.test(data.contents.name)) {
+                validMesgs = Bean.addValue(validMesgs, 'contents', MESSAGE.POST_MOVIE.CONTENTS.NAME.CHARTYPE);
+            }
         }
 
         return validMesgs;

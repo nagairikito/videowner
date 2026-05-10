@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import API_URL_CONST from '../constants/apiUrlConst.js';
 import URL_CONST from '../constants/urlConst.js';
@@ -59,6 +59,7 @@ const Signup = () => {
 
     return(
         <div className="signup-form">
+            <h2>新規ユーザー登録</h2>
             <form>
                 <div className="input-box">
                     <label htmlFor="userName">ユーザー名</label>
@@ -89,7 +90,7 @@ const Signup = () => {
                 { errMsg !== "" && (<div>{errMsg}</div>)}
             </form>
             <div>
-                <a href={URL_CONST.LOGIN}>ログインへ</a>
+                <Link to={URL_CONST.LOGIN}>ログインへ</Link>
             </div>
         </div>
     );

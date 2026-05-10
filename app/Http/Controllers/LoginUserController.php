@@ -19,8 +19,6 @@ class LoginUserController extends Controller {
      * @return
      */
     public function getLoginUser(Request $request) {
-        // $loginUserOpt = $request->user();
-
         $loginUser = [];
         if(Auth::check()) {
             $loginUser = [
@@ -32,7 +30,6 @@ class LoginUserController extends Controller {
             ];
         } 
 
-        // return $loginUserOpt != null ? Bean::responseSuccess($loginUserOpt) : Bean::responseNoAuth() ;
         return $loginUser != [] ? Bean::responseSuccess($loginUser) : Bean::responseNoAuth() ;
     }
 }

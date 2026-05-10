@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import { AuthContext } from '../app.jsx';
 import API_URL_CONST from '../constants/apiUrlConst.js';
@@ -16,6 +16,7 @@ const Login = () => {
     const navigate = useNavigate();
     const { loginUserRes, setLoginUserRes } = useContext(AuthContext);
     const isFirstRender = useRef(true);
+    const isFirstSubmit = useRef(true);
     const [form, setForm] = useState(initialForm);
     const [validMsgs, setValidMsgs] = useState({});
     const [errMsg, setErrMsg] = useState("");
@@ -32,6 +33,10 @@ const Login = () => {
             isFirstRender.current = false;
             return;
         }
+        if(isFirstSubmit.current) {
+            isFirstSubmit.current = false;
+            return;
+        }
 
         const resultValidMsg = Bean.loginFormValidation(form);
         setValidMsgs(resultValidMsg);
@@ -39,6 +44,7 @@ const Login = () => {
     
     const handleSubmit = async(e) => {
         e.preventDefault();
+        if(isFirstRender) isFirstRender.current = false;
 
         //バリデーション
         const resultValidMsg = Bean.loginFormValidation(form);
@@ -61,6 +67,7 @@ const Login = () => {
 
     return(
         <div className="login-form">
+            <h2>ログインフォーム</h2>
             <form>
                 <div className="input-box">
                     <label htmlFor="loginId">ログインID</label>
@@ -80,7 +87,7 @@ const Login = () => {
                 { errMsg !== "" && (<div>{errMsg}</div>)}
             </form>
             <div>
-                <a href={URL_CONST.SIGNUP}>新規登録はこちら</a>
+                <Link to={URL_CONST.SIGNUP}>新規登録はこちら</Link>
             </div>
         </div>
     );
