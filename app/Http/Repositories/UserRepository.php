@@ -10,13 +10,13 @@ use App\Models\User;
 class UserRepository extends Repository {
 
     /** ユーザーテーブル Model */
-    private User $user;
+    private User $repository;
     
     /**
      * コンストラクタ
      */
-    public function __construct(User $user) {
-        $this->user = $user;
+    public function __construct(User $repository) {
+        $this->repository = $repository;
     }
 
     /**
@@ -26,7 +26,7 @@ class UserRepository extends Repository {
      * @return User|null ユーザー情報、存在しない場合はnull 
      */
     public function getUserByLoginId(string $loginId) : ?User {
-        $user = $this->user->where('login_id', $loginId)->first();
+        $user = $this->repository->where('login_id', $loginId)->first();
 
         return $user;
     }
@@ -38,10 +38,10 @@ class UserRepository extends Repository {
      * @return bool 登録結果（成功ならtrue、失敗ならfalse）
      */
     public function signup(array $data) : bool {
-        $this->user->user_name = $data['userName'];
-        $this->user->login_id = $data['loginId'];
-        $this->user->password = $data['password'];
+        $this->repository->user_name = $data['userName'];
+        $this->repository->login_id = $data['loginId'];
+        $this->repository->password = $data['password'];
 
-        return $this->user->save();
+        return $this->repository->save();
     }
 }
