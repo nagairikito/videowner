@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Video extends Model
+class Thumbnail extends Model
 {
     /**
      * モデルと関連しているテーブル
@@ -16,6 +16,7 @@ class Video extends Model
     protected $fillable = [
         'file_name',
         'file_path',
+        'video_post_id',
         'created_by',
         'delete_flag',
     ];

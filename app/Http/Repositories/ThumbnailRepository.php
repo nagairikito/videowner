@@ -2,20 +2,20 @@
 
 namespace App\Http\Repositories;
 
-use App\Models\Video;
+use App\Models\Thumbnail;
 
 /**
  * 新規ユーザー登録 Repository
  */
-class VideoRepository extends Repository {
+class ThumbnailRepository extends Repository {
 
     /** 動画テーブル Model */
-    private Video $repository;
+    private Thumbnail $repository;
     
     /**
      * コンストラクタ
      */
-    public function __construct(Video $repository) {
+    public function __construct(Thumbnail $repository) {
         $this->repository = $repository;
     }
 
@@ -23,23 +23,23 @@ class VideoRepository extends Repository {
      * IDによる動画情報単体取得
      * 
      * @param int $id ID
-     * @return Video|null 動画情報、存在しない場合はnull 
+     * @return Thumbnail|null 動画情報、存在しない場合はnull 
      */
-    public function getVideoById(int $id) : ?Video {
+    public function getVideoById(int $id) : ?Thumbnail {
         $movie = $this->repository->where('id', $id)->first();
 
         return $movie;
     }
 
     /**
-     * 動画登録処理
+     * サムネイル登録
      * 
      * @param array $data 入力情報
      * @return bool 登録結果（成功ならtrue、失敗ならfalse）
      */
-    public function registerVideo(array $data) : bool {
-        $this->repository->file_name = $data['video']['name'];
-        $this->repository->file_path = $data['video']['file'];
+    public function registerThumbnail(array $data) : bool {
+        $this->repository->file_name = $data['thumbnail']['name'];
+        $this->repository->file_path = $data['thumbnail']['file'];
         $this->repository->video_post_id = $data['videoPostId'];
         $this->repository->created_by = $data['created_by'];
 

@@ -37,10 +37,11 @@ class PostVideoController extends Controller {
                 'name' => $request->thumbnail->name,
                 'file' => $request->thumbnail->file,
             ],
-            'contents' => [
+            'video' => [
                 'name' => $request->contents->name,
                 'file' => $request->contents->file,
             ],
+            'created_by' => Auth::id(),
         ];
 
         $result = $this->service->postVideo($data);
