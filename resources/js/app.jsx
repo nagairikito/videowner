@@ -12,8 +12,8 @@ import Header from './components/common/Header';
 import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import PostMovie from './components/PostMovie';
 import ProtectedRoute from './middleware/ProtectedRoute';
+import PostVideo from './components/PostVideo';
 
 export const AuthContext = createContext();
 
@@ -49,7 +49,7 @@ function App() {
 
                     {/* ログイン認証時 */}
                     <Route element={<ProtectedRoute />}>
-                        <Route path={URL_CONST.POST_MOVIE} element={<PostMovie />} />
+                        <Route path={URL_CONST.POST_VIDEO} element={<PostVideo />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

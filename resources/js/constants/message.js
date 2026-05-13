@@ -34,7 +34,7 @@ const MESSAGE = {
     },
 
     // 動画投稿フォーム
-    POST_MOVIE: {
+    POST_VIDEO: {
         TITLE: {
             REQUIRED: 'ユーザー名は255文字以下で入力してください。',
             CHARTYPE: 'ログインIDは半角英数字、記号（「.」「_」「-」）で入力してください。',
@@ -48,7 +48,7 @@ const MESSAGE = {
                 MIMETYPE: '画像形式のファイルを選択してください。',
             }
         },
-        CONTENTS: {
+        VIDEO: {
             NAME: {
                 REQUIRED: 'ユーザー名は255文字以下で入力してください。',
                 CHARTYPE: 'ログインIDは半角英数字、記号（「.」「_」「-」）で入力してください。',

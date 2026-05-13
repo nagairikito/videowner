@@ -10,9 +10,9 @@ const Bean = {
      * 
      * @param {string} url APIのURL
      * @param {Object} data データ
-     * @returns {Object} レスポンス
+     * @returns {Response} レスポンス
      */
-    fetchApi: async (url, data) => {
+    fetchPostApi: async (url, data) => {
         const response = await fetch(url, {
                 method: "POST",
                 credentials: "include",
@@ -26,22 +26,24 @@ const Bean = {
     },
 
     /**
-     * APIにアクセス(GET)
+     * APIにアクセス(POST,File)
      * 
      * @param {string} url APIのURL
      * @param {Object} data データ
-     * @returns {Object} レスポンス
+     * @returns {Response} レスポンス
      */
-    getFetchApi: async (url) => {
+    fecthPostFileApi: async (url, data) => {
+        const formData = new FormData();
+        formData.append('data', data);
+
         const response = await fetch(url, {
-                method: "GET",
+                method: "POST",
                 credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
+                body: formData
             }
+            
         );
-        return await response.json();
+        return await response;
     },
 
     /**
@@ -126,7 +128,7 @@ const Bean = {
      * @param {Object} data フォームの入力情報
      * @return {Array} バリデーションメッセージ
      */
-    postMovieForm: (data) => {
+    postVideoForm: (data) => {
 
         // バリデーションメッセージ
         let validMesgs = {};
@@ -143,30 +145,30 @@ const Bean = {
         // サムネイル
         if(data.thumbnail.file !== "") {
             if (!data.thumbnail.file.type.startsWith('image/')) {
-                validMesgs = Bean.addValue(validMesgs, 'thumbnail', MESSAGE.POST_MOVIE.THUMBNAIL.FILE.MIMETYPE);
+                validMesgs = Bean.addValue(validMesgs, 'thumbnail', MESSAGE.POST_VIDEO.THUMBNAIL.FILE.MIMETYPE);
             }
             if(data.thumbnail.name.trim() === "" || data.thumbnail.name === "undefined"
             || data.thumbnail.name.length > 255) {
-                validMesgs = Bean.addValue(validMesgs, 'thumbnail', MESSAGE.POST_MOVIE.THUMBNAIL.NAME.REQUIRED);
+                validMesgs = Bean.addValue(validMesgs, 'thumbnail', MESSAGE.POST_VIDEO.THUMBNAIL.NAME.REQUIRED);
             }
             if (!/^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-zA-Z0-9._-]+$/u.test(data.thumbnail.name)) {
-                validMesgs = Bean.addValue(validMesgs, 'thumbnail', MESSAGE.POST_MOVIE.THUMBNAIL.NAME.CHARTYPE);
+                validMesgs = Bean.addValue(validMesgs, 'thumbnail', MESSAGE.POST_VIDEO.THUMBNAIL.NAME.CHARTYPE);
             }
         }
 
-        // コンテンツ
-        if(data.contents.file === "") {
-            validMesgs = Bean.addValue(validMesgs, 'contents', MESSAGE.POST_MOVIE.CONTENTS.FILE.REQUIRED);
+        // 動画
+        if(data.video.file === "") {
+            validMesgs = Bean.addValue(validMesgs, 'video', MESSAGE.POST_VIDEO.VIDEO.FILE.REQUIRED);
         } else {
-            if (!data.contents.file.type.startsWith('image/')) {
-                validMesgs = Bean.addValue(validMesgs, 'contents', MESSAGE.POST_MOVIE.CONTENTS.FILE.MIMETYPE);
+            if (!data.video.file.type.startsWith('image/')) {
+                validMesgs = Bean.addValue(validMesgs, 'video', MESSAGE.POST_VIDEO.VIDEO.FILE.MIMETYPE);
             }
-            if(data.contents.name.trim() === "" || data.contents.name === "undefined"
-            || data.contents.name.length > 255) {
-                validMesgs = Bean.addValue(validMesgs, 'contents', MESSAGE.POST_MOVIE.CONTENTS.NAME.REQUIRED);
+            if(data.video.name.trim() === "" || data.video.name === "undefined"
+            || data.video.name.length > 255) {
+                validMesgs = Bean.addValue(validMesgs, 'video', MESSAGE.POST_VIDEO.VIDEO.NAME.REQUIRED);
             }
-            if (!/^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-zA-Z0-9._-]+$/u.test(data.contents.name)) {
-                validMesgs = Bean.addValue(validMesgs, 'contents', MESSAGE.POST_MOVIE.CONTENTS.NAME.CHARTYPE);
+            if (!/^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}a-zA-Z0-9._-]+$/u.test(data.video.name)) {
+                validMesgs = Bean.addValue(validMesgs, 'video', MESSAGE.POST_VIDEO.VIDEO.NAME.CHARTYPE);
             }
         }
 

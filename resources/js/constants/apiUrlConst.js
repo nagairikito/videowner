@@ -9,6 +9,9 @@ const API_URL_CONST = {
     // ログイン
     LOGIN: '/api/login',
 
+    // 動画投稿
+    POST_VIDEO: '/api/post_video',
+
 }
 
 export default API_URL_CONST;

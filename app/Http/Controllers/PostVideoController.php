@@ -31,21 +31,22 @@ class PostVideoController extends Controller {
      * @return
      */
     public function postVideo(Request $request) {
-        $data = [
-            'title' => $request->title,
-            'thumbnail' => [
-                'name' => $request->thumbnail->name,
-                'file' => $request->thumbnail->file,
-            ],
-            'video' => [
-                'name' => $request->contents->name,
-                'file' => $request->contents->file,
-            ],
-            'created_by' => Auth::id(),
-        ];
+        Log::info($request);
+        // $data = [
+        //     'title' => $request->title,
+        //     'thumbnail' => [
+        //         'name' => $request->thumbnail->name,
+        //         'file' => $request->thumbnail->file,
+        //     ],
+        //     'video' => [
+        //         'name' => $request->contents->name,
+        //         'file' => $request->contents->file,
+        //     ],
+        //     'created_by' => Auth::id(),
+        // ];
 
-        $result = $this->service->postVideo($data);
+        // $result = $this->service->postVideo($data);
 
-        return Bean::responseSuccess($result[1]);
+        // return Bean::responseSuccess($result[1]);
     }
 }

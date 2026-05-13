@@ -26,9 +26,9 @@ class VideoRepository extends Repository {
      * @return Video|null 動画情報、存在しない場合はnull 
      */
     public function getVideoById(int $id) : ?Video {
-        $movie = $this->repository->where('id', $id)->first();
+        $video = $this->repository->where('id', $id)->first();
 
-        return $movie;
+        return $video;
     }
 
     /**

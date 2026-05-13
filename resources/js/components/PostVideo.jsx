@@ -3,9 +3,10 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import { AuthContext } from '../app.jsx';
 import Bean from '../constants/bean.jsx';
+import API_URL_CONST from '../constants/apiUrlConst.js';
 
 
-const PostMovie = () => {
+const PostVideo = () => {
 
     const initialForm = {
         'title': '',
@@ -13,7 +14,7 @@ const PostMovie = () => {
             name: '',
             file: '',
         },
-        'contents': {
+        'video': {
             name: '',
             file: '',
         },
@@ -26,14 +27,16 @@ const PostMovie = () => {
 
     const handleChange = (e) => {
 
-        const condition = e.target.type === "file" && e.target.name === "title" || e.target.type === "file" && e.target.name === "contents";
+        const condition = e.target.type === "file" && e.target.name === "thumbnail" || e.target.type === "file" && e.target.name === "video";
 
         if(condition) {
+            const inputFile = e.target.files[0];
+
             setForm({
                 ...form,
                 [e.target.name]: {
-                    name: e.target.name,
-                    file: e.target.file[0],
+                    name: inputFile.name,
+                    file: inputFile,
                 }
             });
         } else {
@@ -54,20 +57,35 @@ const PostMovie = () => {
             return;
         }
 
-        const resultValidMsgs = Bean.postMovieForm(form);
-        setValidMsgs(resultValidMsgs)
+        const resultValidMsgs = Bean.postVideoForm(form);
+        setValidMsgs(resultValidMsgs);
+        
     }, [form])
 
-    const handleSubmit = (e) => {
+    useEffect(() => {
+                console.log(validMsgs)
+
+    }, [validMsgs])
+
+    const handleSubmit = async(e) => {
         e.preventDefault();
         if(isFirstSubmit) isFirstSubmit.current = false;
 
         // バリデーション
-        const resultValidMsgs = Bean.postMovieForm(form);
+        const resultValidMsgs = Bean.postVideoForm(form);
         if(Object.keys(resultValidMsgs).length > 0) {
             setValidMsgs(resultValidMsgs);
             return;
         }
+
+        const response = await Bean.fecthPostFileApi(API_URL_CONST.POST_VIDEO, form);
+        if(response.ok) {
+            navigate(URL_CONST.LOGIN);
+        } else {
+            const errorMsg = await response.json();
+            setErrMsg(errorMsg.resErrMsg);
+        }
+
     }
 
     return(
@@ -89,8 +107,8 @@ const PostMovie = () => {
                     ))}
                 </div>
                 <div>
-                    <div htmlFor="contents">動画ファイル</div>
-                    <input type="file" accept="video/*" id="contents" name="contents" onChange={handleChange} />
+                    <div htmlFor="video">動画ファイル</div>
+                    <input type="file" accept="video/*" id="video" name="video" onChange={handleChange} />
                     { (validMsgs.contents?.length > 0) && validMsgs.contents.map((key, msg) => (
                         <div key={key}>{msg}</div>
                     ))}
@@ -103,4 +121,4 @@ const PostMovie = () => {
     );
 }
 
-export default PostMovie;
+export default PostVideo;

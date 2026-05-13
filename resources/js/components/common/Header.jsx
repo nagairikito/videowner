@@ -13,7 +13,7 @@ const Header = () => {
                 { loginUserRes?.loginUser?.loginId ?
                     <div>
                         <div>{loginUserRes.loginUser.userName}</div> 
-                        <Link to={URL_CONST.POST_MOVIE}>動画投稿</Link>
+                        <Link to={URL_CONST.POST_VIDEO}>動画投稿</Link>
                     </div>
                 : 
                     <Link to={URL_CONST.LOGIN}>ログイン</Link>

@@ -12,5 +12,8 @@ class UrlConst {
 
     // ログイン
     const LOGIN = "/login";
+
+    // 動画投稿
+    const POST_VIDEO = "/post_video";
         
 }

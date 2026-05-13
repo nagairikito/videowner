@@ -47,7 +47,7 @@ const Signup = () => {
             return;
         }
 
-        const response = await Bean.fetchApi(API_URL_CONST.SIGNUP, form);
+        const response = await Bean.fetchPostApi(API_URL_CONST.SIGNUP, form);
         if(response.ok) {
             navigate(URL_CONST.LOGIN);
         } else {

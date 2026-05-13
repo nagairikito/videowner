@@ -10,7 +10,7 @@ const URL_CONST = {
     LOGIN: '/login',
 
     // 動画投稿フォーム
-    POST_MOVIE: '/post_movie',
+    POST_VIDEO: '/post_video',
 
 }
 

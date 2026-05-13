@@ -53,7 +53,7 @@ const Login = () => {
             return;
         }
 
-        const response = await Bean.fetchApi(API_URL_CONST.LOGIN, form);
+        const response = await Bean.fetchPostApi(API_URL_CONST.LOGIN, form);
         const resResult = await response.json();
         if(response.ok) {
             setLoginUserRes(resResult);

@@ -35,7 +35,7 @@ class PostVideoRepository extends Repository {
      * 動画投稿処理
      * 
      * @param array $data 入力情報
-     * @return bool 登録結果（成功ならtrue、失敗ならfalse）
+     * @return VideoPost 登録結果（成功ならVideoPostオブジェクト、失敗なら例外）
      */
     public function postVideo(array $data) : VideoPost {
         $videoPost = VideoPost::create([
