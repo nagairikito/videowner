@@ -4,6 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../app.jsx';
 import Bean from '../constants/bean.jsx';
 import API_URL_CONST from '../constants/apiUrlConst.js';
+import URL_CONST from '../constants/urlConst.js';
 
 
 const PostVideo = () => {
@@ -20,10 +21,12 @@ const PostVideo = () => {
         },
     }
     
+    const navigate = useNavigate();
     const isFirstRender = useRef(true);
     const isFirstSubmit = useRef(true);
     const [form, setForm] = useState(initialForm);
     const [validMsgs, setValidMsgs] = useState({});
+    const [errMsg, setErrMsg] = useState("");
 
     const handleChange = (e) => {
 
@@ -60,12 +63,7 @@ const PostVideo = () => {
         const resultValidMsgs = Bean.postVideoForm(form);
         setValidMsgs(resultValidMsgs);
         
-    }, [form])
-
-    useEffect(() => {
-                console.log(validMsgs)
-
-    }, [validMsgs])
+    }, [form]);
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -80,7 +78,7 @@ const PostVideo = () => {
 
         const response = await Bean.fecthPostFileApi(API_URL_CONST.POST_VIDEO, form);
         if(response.ok) {
-            navigate(URL_CONST.LOGIN);
+            navigate(URL_CONST.HOME);
         } else {
             const errorMsg = await response.json();
             setErrMsg(errorMsg.resErrMsg);

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('video_posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->int('created_by');
-            $table->int('delete_flag')->default(0);
+            $table->integer('created_by');
+            $table->integer('delete_flag')->default(0);
             $table->timestamps();
         });
     }

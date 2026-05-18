@@ -26,7 +26,7 @@ class LoginController extends Controller {
      * ログイン
      * 
      * @param LoginRequest $request リクエスト
-     * @return
+     * @return Object レスポンス
      */
     public function login(LoginRequest $request) {
         $data = [
@@ -36,6 +36,11 @@ class LoginController extends Controller {
 
         $result = $this->service->login($data);
 
-        return $result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]);
+        if($result[0]) {
+            $request->session()->regenerate();
+            Bean::responseSuccess($result[1]);
+        }
+        Bean::responseFailure($result[1]);
+        // return $result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]);
     }
 }

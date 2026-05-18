@@ -33,17 +33,47 @@ const Bean = {
      * @returns {Response} レスポンス
      */
     fecthPostFileApi: async (url, data) => {
-        const formData = new FormData();
-        formData.append('data', data);
+        const fd = new FormData();
+        Bean.appendFormData(fd, data);
 
         const response = await fetch(url, {
                 method: "POST",
                 credentials: "include",
-                body: formData
+                body: fd
             }
             
         );
         return await response;
+    },
+
+    /**
+     * 
+     * @param {FormData} fd フォームデータ
+     * @param {mixed} data 対象データ
+     * @param {String} parentKey 親キー
+     */
+    appendFormData: (fd, data, parentKey = '') => {
+
+        Object.keys(data).forEach(key => {
+
+            const value = data[key];
+
+            const formKey = parentKey
+                ? `${parentKey}[${key}]`
+                : key;
+
+            if (
+                typeof value === 'object' &&
+                value !== null &&
+                !(value instanceof File)
+            ) {
+                Bean.appendFormData(fd, value, formKey);
+
+            } else {
+                fd.append(formKey, value);
+            }
+
+        });
     },
 
     /**
@@ -160,7 +190,7 @@ const Bean = {
         if(data.video.file === "") {
             validMesgs = Bean.addValue(validMesgs, 'video', MESSAGE.POST_VIDEO.VIDEO.FILE.REQUIRED);
         } else {
-            if (!data.video.file.type.startsWith('image/')) {
+            if (!data.video.file.type.startsWith('video/')) {
                 validMesgs = Bean.addValue(validMesgs, 'video', MESSAGE.POST_VIDEO.VIDEO.FILE.MIMETYPE);
             }
             if(data.video.name.trim() === "" || data.video.name === "undefined"
@@ -186,7 +216,21 @@ const Bean = {
     addValue: (obj, key, value) => {
         (obj[key] ??= []).push(value);
         return obj;
-    }
+    },
+
+    /**
+     * データがオブジェクトかどうかを判断する
+     * 
+     * @param {mixed} data 
+     * @return {boolean} 
+     */
+    isObject: (data) => {
+    return (
+        typeof data === 'object' &&
+        data !== null &&
+        !Array.isArray(data)
+    );
+}
 };
 
 export default Bean;

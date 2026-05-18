@@ -22,7 +22,7 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'm_users';
+    protected $table = 'users';
 
     /**
      * Get the attributes that should be cast.

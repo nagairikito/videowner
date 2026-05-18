@@ -28,25 +28,27 @@ class PostVideoController extends Controller {
      * 動画投稿
      * 
      * @param Request $request リクエスト
-     * @return
+     * @return Object レスポンス
      */
     public function postVideo(Request $request) {
-        Log::info($request);
-        // $data = [
-        //     'title' => $request->title,
-        //     'thumbnail' => [
-        //         'name' => $request->thumbnail->name,
-        //         'file' => $request->thumbnail->file,
-        //     ],
-        //     'video' => [
-        //         'name' => $request->contents->name,
-        //         'file' => $request->contents->file,
-        //     ],
-        //     'created_by' => Auth::id(),
-        // ];
+        Log::info(Auth::id());
+        Log::info(Auth::user());
+        $data = [
+            'title' => $request->title,
+            'thumbnail' => [
+                'name' => $request->thumbnail['name'],
+                'file' => $request->thumbnail['file'],
+            ],
+            'video' => [
+                'name' => $request->video['name'],
+                'file' => $request->video['file'],
+            ],
+            'videoPostId' => null,
+            'created_by' => Auth::user()->id,
+        ];
+Log::info($data['created_by']);
+        $result = $this->service->postVideo($data);
 
-        // $result = $this->service->postVideo($data);
-
-        // return Bean::responseSuccess($result[1]);
+        return $result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]);
     }
 }

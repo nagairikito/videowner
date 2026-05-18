@@ -40,7 +40,7 @@ class PostVideoRepository extends Repository {
     public function postVideo(array $data) : VideoPost {
         $videoPost = VideoPost::create([
             'title' => $data['title'],
-            'created_by' => $data['user_id'],
+            'created_by' => $data['created_by'],
         ]);
 
         return $videoPost;

@@ -27,7 +27,7 @@ class LoginService extends Service {
      * ログイン
      * 
      * @param array $data 入力情報
-     * @return mixed 登録結果(成功：true、失敗：false), 成功：ユーザー情報、失敗：エラーメッセージ
+     * @return array 登録結果(成功：true、失敗：false), 成功：ユーザー情報、失敗：エラーメッセージ
      */
     public function login(array $data) : array {
         $userOpt = $this->repository->getUserByLoginId($data['loginId']);
@@ -35,9 +35,9 @@ class LoginService extends Service {
             return [false, Message::LOGIN["USER_NONEXISTED"]];
         }
 
-        if(!Hash::check($data['password'], $userOpt->password)) {
-            return [false, Message::LOGIN["LOGIN_OR_PASSWORD_MISMATCH"]];
-        }
+        // if(!Hash::check($data['password'], $userOpt->password)) {
+        //     return [false, Message::LOGIN["LOGIN_OR_PASSWORD_MISMATCH"]];
+        // }
 
         $credentials = [
             'login_id' => $data['loginId'],

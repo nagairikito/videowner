@@ -25,7 +25,7 @@ class SignupRequest extends FormRequest
     {
         return [
             'userName'               => 'required|string|max:255',
-            'loginId'                => 'required|unique:m_users,login_id|string|regex:/^[a-zA-Z0-9._-]+$/|min:8|max:32',
+            'loginId'                => 'required|unique:users,login_id|string|regex:/^[a-zA-Z0-9._-]+$/|min:8|max:32',
             'password'               => 'required|string|regex:/^[a-zA-Z0-9._-]+$/|min:8|max:32',
         ];
     }

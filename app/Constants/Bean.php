@@ -11,7 +11,7 @@ class Bean {
      * レスポンス(成功)
      * 
      * @param mixed $data レスポンスとして渡したいデータ
-     * @return String レスポンスとして渡したいデータ、レスポンスコード(200)
+     * @return Object レスポンスとして渡したいデータ、レスポンスコード(200)
      */
     public static function responseSuccess(mixed $data = []) {
         return response()->json($data, 200);
@@ -21,7 +21,7 @@ class Bean {
      * レスポンス(失敗)
      * 
      *  @param string $message エラーメッセージ
-     *  @return String エラーメッセージ、レスポンスコード(500)
+     *  @return Object エラーメッセージ、レスポンスコード(500)
      */
     public static function responseFailure(string $message = Message::RESPONSE["DEFAULT_ERR_MSG"]) {
         $data = [
@@ -35,7 +35,7 @@ class Bean {
      * レスポンス(認証なし)
      * 
      *  @param string $message エラーメッセージ
-     *  @return String エラーメッセージ、レスポンスコード(500)
+     *  @return Object エラーメッセージ、レスポンスコード(500)
      */
     public static function responseNoAuth(string $message = Message::RESPONSE["NO_AUTH_MSG"]) {
         $data = [
