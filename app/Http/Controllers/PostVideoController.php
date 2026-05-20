@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\Bean;
+use App\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Http\Services\PostVideoService;
+use App\Services\PostVideoService;
 
 
 /**
@@ -31,8 +31,6 @@ class PostVideoController extends Controller {
      * @return Object レスポンス
      */
     public function postVideo(Request $request) {
-        Log::info(Auth::id());
-        Log::info(Auth::user());
         $data = [
             'title' => $request->title,
             'thumbnail' => [
@@ -46,9 +44,8 @@ class PostVideoController extends Controller {
             'videoPostId' => null,
             'created_by' => Auth::user()->id,
         ];
-Log::info($data['created_by']);
         $result = $this->service->postVideo($data);
 
-        return $result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]);
+        return $result[0] ? ResponseHelper::responseSuccess($result[1]) : ResponseHelper::responseFailure($result[1]);
     }
 }

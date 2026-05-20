@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\SignupService;
+use App\Services\SignupService;
 use App\Http\Requests\SignupRequest;
-use App\Constants\Bean;
+use App\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
 
 /**
@@ -38,6 +38,6 @@ class SignupController extends Controller {
 
         $result = $this->service->signup($data);
 
-        return $result[0] ? Bean::responseSuccess($result[1]) : Bean::responseFailure($result[1]);
+        return $result[0] ? ResponseHelper::responseSuccess($result[1]) : ResponseHelper::responseFailure($result[1]);
     }
 }

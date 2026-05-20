@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { AuthContext } from '../../app.jsx';
@@ -6,7 +6,10 @@ import URL_CONST from '../../constants/urlConst.js';
 
 const Header = () => {
     const { loginUserRes, setLoginUserRes } = useContext(AuthContext);
+    useEffect(() => {
+console.log(loginUserRes)
 
+    }, [loginUserRes])
     return(
         <header>
             <div className="header-wrapper">

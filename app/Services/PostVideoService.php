@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
-use App\Http\Repositories\PostVideoRepository;
-use App\Http\Repositories\ThumbnailRepository;
-use App\Http\Repositories\VideoRepository;
+use App\Repositories\PostVideoRepository;
+use App\Repositories\ThumbnailRepository;
+use App\Repositories\VideoRepository;
 use App\Constants\Message;
 use Exception;
 use Illuminate\Support\Facades\DB;

@@ -19,10 +19,16 @@ class Message {
 
     // ログイン
     const LOGIN = [
-        "USER_NONEXISTED" => "このログインIDは登録されていません。",
         "LOGIN_OR_PASSWORD_MISMATCH" => "ログインIDまたはパスワードの入力に誤りがあります。",
         "LOGIN_FAILURE" => "ログインに失敗しました。",
         "LOGIN_SUCCESS" => "ログインしました。",
+        "USER_NONEXISTED" => "このログインIDは登録されていません。",
+    ];
+        
+    // ログアウト
+    const LOGOUT = [
+        "LOGOUT_SUCCESS" => "ログアウトしました。",
+        "UNAUTHRISED_ACCESS" => "不正なアクセスを検知したため、強制ログアウトします。"
     ];
         
 }

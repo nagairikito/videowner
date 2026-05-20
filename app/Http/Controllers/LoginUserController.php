@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\Bean;
+use App\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -29,7 +29,8 @@ class LoginUserController extends Controller {
                 ],
             ];
         } 
-
-        return $loginUser != [] ? Bean::responseSuccess($loginUser) : Bean::responseNoAuth() ;
+Log::info(Auth::id());
+Log::info($loginUser);
+        return $loginUser != [] ? ResponseHelper::responseSuccess($loginUser) : ResponseHelper::responseNoAuth();
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
-use App\Http\Repositories\UserRepository;
+use App\Repositories\UserRepository;
 use App\Constants\Message;
 
 /**

@@ -13,6 +13,9 @@ class UrlConst {
     // ログイン
     const LOGIN = "/login";
 
+    // ログアウト
+    const LOGOUT = "/logout";
+
     // 動画投稿
     const POST_VIDEO = "/post_video";
         
