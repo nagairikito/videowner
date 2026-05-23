@@ -9,6 +9,12 @@ const API_URL_CONST = {
     // ログイン
     LOGIN: '/api/login',
 
+    // ログアウト
+    LOGOUT: '/api/logout',
+
+    // 動画リスト
+    VIDEO_LIST: '/api/video_list',
+
     // 動画投稿
     POST_VIDEO: '/api/post_video',
 

@@ -6,11 +6,13 @@ use App\Http\Controllers\LoginUserController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostVideoController;
+use App\Http\Controllers\VideoListController;
 use GuzzleHttp\Psr7\Request;
 
 // ログインユーザーを取得、フロントに返却
 Route::prefix('api')->group(function() {
     Route::get(UrlConst::LOGIN_USER, [LoginUserController::class, 'getLoginUser']); // ログインユーザー取得
+    Route::get(UrlConst::VIDEO_LIST, [VideoListController::class, 'getVideoList']); // 動画一覧取得
     Route::post(UrlConst::SIGNUP, [SignupController::class, 'signup']); // 新規ユーザー登録
     Route::post(UrlConst::LOGIN, [AuthController::class, 'login']); // ログイン
 

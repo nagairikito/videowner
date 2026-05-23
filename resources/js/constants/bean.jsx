@@ -1,9 +1,25 @@
 import MESSAGE from "./message";
+import API_URL_CONST from '../constants/apiUrlConst';
 
 /**
  * 共通処理オブジェクト
  */
 const Bean = {
+
+    /**
+     * APIにアクセス(GET)
+     * 
+     * @param {string} url APIのURL
+     * @returns {Response} レスポンス
+     */
+    fetchGetApi: async (url) => {
+        const response = await fetch(url, {
+                method: "GET",
+                credentials: "include",
+            }
+        );
+        return response;
+    },
 
     /**
      * APIにアクセス(POST)
@@ -26,7 +42,7 @@ const Bean = {
     },
 
     /**
-     * APIにアクセス(POST,File)
+     * APIにアクセス(POST送信,Fileを含んだデータをHTTP送信する)
      * 
      * @param {string} url APIのURL
      * @param {Object} data データ
@@ -225,12 +241,27 @@ const Bean = {
      * @return {boolean} 
      */
     isObject: (data) => {
-    return (
-        typeof data === 'object' &&
-        data !== null &&
-        !Array.isArray(data)
-    );
-}
+        return (
+            typeof data === 'object' &&
+            data !== null &&
+            !Array.isArray(data)
+        );
+    },
+
+    /**
+     * ログインユーザーを取得する
+     * 
+     * @return {Response}
+     */
+    // fetchUser: async() => {
+    fetchUser: async() => {
+        // const response = await fetch(API_URL_CONST.LOGIN_USER, {
+        //     credentials: 'include'
+        // });
+        const response = await Bean.fetchGetApi(API_URL_CONST.LOGIN_USER);
+        return response;
+    }
+    
 };
 
 export default Bean;

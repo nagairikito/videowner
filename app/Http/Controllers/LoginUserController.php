@@ -29,8 +29,7 @@ class LoginUserController extends Controller {
                 ],
             ];
         } 
-Log::info(Auth::id());
-Log::info($loginUser);
+
         return $loginUser != [] ? ResponseHelper::responseSuccess($loginUser) : ResponseHelper::responseNoAuth();
     }
 }

@@ -16,6 +16,9 @@ class UrlConst {
     // ログアウト
     const LOGOUT = "/logout";
 
+    // 動画リスト
+    const VIDEO_LIST = "/video_list";
+        
     // 動画投稿
     const POST_VIDEO = "/post_video";
         

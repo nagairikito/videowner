@@ -1,21 +1,22 @@
-import { useEffect, useState, useRef } from 'react';
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect, useRef, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
-import API_URL_CONST from '../constants/apiUrlConst.js';
-import URL_CONST from '../constants/urlConst.js';
-import Bean from '../constants/bean.jsx';
+import { AuthContext } from '../../app.jsx';
+import API_URL_CONST from '../../constants/apiUrlConst.js';
+import URL_CONST from '../../constants/urlConst.js';
+import Bean from '../../constants/bean.jsx';
 
-const Signup = () => {
+const Login = () => {
 
     const initialForm = {
-        userName: '',
         loginId: '',
         password: '',
-        passwordConf: '',
     }
 
     const navigate = useNavigate();
+    const { loginUserRes, setLoginUserRes } = useContext(AuthContext);
     const isFirstRender = useRef(true);
+    const isFirstSubmit = useRef(true);
     const [form, setForm] = useState(initialForm);
     const [validMsgs, setValidMsgs] = useState({});
     const [errMsg, setErrMsg] = useState("");
@@ -32,42 +33,42 @@ const Signup = () => {
             isFirstRender.current = false;
             return;
         }
+        if(isFirstSubmit.current) {
+            isFirstSubmit.current = false;
+            return;
+        }
 
-        const resultValidMsg = Bean.signupFormValidation(form);
+        const resultValidMsg = Bean.loginFormValidation(form);
         setValidMsgs(resultValidMsg);
     }, [form]);
     
     const handleSubmit = async(e) => {
         e.preventDefault();
+        if(isFirstRender) isFirstRender.current = false;
 
         //バリデーション
-        const resultValidMsg = Bean.signupFormValidation(form);
+        const resultValidMsg = Bean.loginFormValidation(form);
         if (Object.keys(resultValidMsg).length > 0) {
             setValidMsgs(resultValidMsg);
             return;
         }
 
-        const response = await Bean.fetchPostApi(API_URL_CONST.SIGNUP, form);
+        const response = await Bean.fetchPostApi(API_URL_CONST.LOGIN, form);
+        const resResult = await response.json();
         if(response.ok) {
-            navigate(URL_CONST.LOGIN);
+            setLoginUserRes(resResult);
+            navigate(URL_CONST.HOME);
         } else {
-            const errorMsg = await response.json();
-            setErrMsg(errorMsg.resErrMsg);
+            // const errorMsg = await response.json();
+            setErrMsg(resResult.resErrMsg);
         }
     }
 
 
     return(
-        <div className="signup-form">
-            <h2>新規ユーザー登録</h2>
+        <div className="login-form">
+            <h2>ログインフォーム</h2>
             <form>
-                <div className="input-box">
-                    <label htmlFor="userName">ユーザー名</label>
-                    <input type="text" id="userName" name="userName" onChange={handleChange}/>
-                    { (validMsgs.userName?.length > 0) && validMsgs.userName.map((msg, key) => (
-                        <div key={key}>{msg}</div>
-                    )) }
-                </div>
                 <div className="input-box">
                     <label htmlFor="loginId">ログインID</label>
                     <input type="text" id="loginId" name="loginId" onChange={handleChange}/>
@@ -82,18 +83,14 @@ const Signup = () => {
                         <div key={key}>{msg}</div>
                     )) }
                 </div>
-                <div className="input-box">
-                    <label htmlFor="passwordConf">確認用パスワード</label>
-                    <input type="password" id="passwordConf" name="passwordConf" onChange={handleChange}/>
-                </div>
-                <input type="submit" value="登録" onClick={handleSubmit} />
+                <input type="submit" value="ログイン" onClick={handleSubmit} />
                 { errMsg !== "" && (<div>{errMsg}</div>)}
             </form>
             <div>
-                <Link to={URL_CONST.LOGIN}>ログインへ</Link>
+                <Link to={URL_CONST.SIGNUP}>新規登録はこちら</Link>
             </div>
         </div>
     );
 }
 
-export default Signup;
+export default Login;
