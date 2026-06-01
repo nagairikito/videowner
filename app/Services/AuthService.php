@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 /**
- * ログイン Service
+ * 認証 Service
  */
 class AuthService extends Service {
     

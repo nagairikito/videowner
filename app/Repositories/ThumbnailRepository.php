@@ -5,11 +5,11 @@ namespace App\Repositories;
 use App\Models\Thumbnail;
 
 /**
- * 新規ユーザー登録 Repository
+ * サムネイル Repository
  */
 class ThumbnailRepository extends Repository {
 
-    /** 動画テーブル Model */
+    /**サムネイルルテーブル Model */
     private Thumbnail $repository;
     
     /**
@@ -40,7 +40,7 @@ class ThumbnailRepository extends Repository {
     public function registerThumbnail(array $data) : bool {
         $this->repository->file_name = $data['thumbnail']['name'];
         $this->repository->file_path = $data['thumbnail']['file'];
-        $this->repository->video_post_id = $data['videoPostId'];
+        $this->repository->video_contents_id = $data['videoContentsId'];
         $this->repository->created_by = $data['created_by'];
 
         return $this->repository->save();

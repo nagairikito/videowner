@@ -1,11 +1,11 @@
-import VideoList from "../videoList/VideoList";
+import VideoContentsList from "../videoContentsList/VideoContentsList";
 
 const Home = () => {
 
     return(
         <>
             <div>ホーム</div>
-            <VideoList />
+            <VideoContentsList />
         </>
     );
 }

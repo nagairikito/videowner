@@ -4,14 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VideoPost extends Model
+class VideoContents extends Model
 {
     /**
      * モデルと関連しているテーブル
      *
      * @var string
      */
-    protected $table = 'video_posts';
+    protected $table = 'video_contents';
 
     protected $fillable = [
         'title',

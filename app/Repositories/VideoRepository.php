@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\Video;
 
 /**
- * 新規ユーザー登録 Repository
+ * 動画 Repository
  */
 class VideoRepository extends Repository {
 
@@ -40,7 +40,7 @@ class VideoRepository extends Repository {
     public function registerVideo(array $data) : bool {
         $this->repository->file_name = $data['video']['name'];
         $this->repository->file_path = $data['video']['file'];
-        $this->repository->video_post_id = $data['videoPostId'];
+        $this->repository->video_contents_id = $data['videoContentsId'];
         $this->repository->created_by = $data['created_by'];
 
         return $this->repository->save();

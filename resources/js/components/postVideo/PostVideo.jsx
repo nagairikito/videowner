@@ -93,21 +93,21 @@ const PostVideo = () => {
                 <div>
                     <div htmlFor="title">動画タイトル</div>
                     <input type="text" id="title" name="title" onChange={handleChange}/>
-                    { (validMsgs.title?.length > 0) && validMsgs.title.map((key, msg) => (
+                    { (validMsgs.title?.length > 0) && validMsgs.title.map((msg, key) => (
                         <div key={key}>{msg}</div>
                     ))}
                 </div>
                 <div>
                     <div htmlFor="thumbnail">サムネイル</div>
                     <input type="file" accept="image/*" id="thumbnail" name="thumbnail" onChange={handleChange} />
-                    { (validMsgs.thumbnail?.length > 0) && validMsgs.thumbnail.map((key, msg) => (
+                    { (validMsgs.thumbnail?.length > 0) && validMsgs.thumbnail.map((msg, key) => (
                         <div key={key}>{msg}</div>
                     ))}
                 </div>
                 <div>
                     <div htmlFor="video">動画ファイル</div>
                     <input type="file" accept="video/*" id="video" name="video" onChange={handleChange} />
-                    { (validMsgs.contents?.length > 0) && validMsgs.contents.map((key, msg) => (
+                    { (validMsgs.contents?.length > 0) && validMsgs.contents.map((msg, key) => (
                         <div key={key}>{msg}</div>
                     ))}
                 </div>

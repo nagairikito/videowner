@@ -13,7 +13,10 @@ const API_URL_CONST = {
     LOGOUT: '/api/logout',
 
     // 動画リスト
-    VIDEO_LIST: '/api/video_list',
+    VIDEO_CONTENTS_LIST: '/api/video_contents_list',
+
+    // 動画詳細
+    VIDEO_DETAIL: (id) => `/api/video?id=${id}`,
 
     // 動画投稿
     POST_VIDEO: '/api/post_video',

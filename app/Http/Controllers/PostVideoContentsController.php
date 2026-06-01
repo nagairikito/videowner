@@ -6,21 +6,21 @@ use App\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use App\Services\PostVideoService;
+use App\Services\VideoContentsService;
 
 
 /**
- * 動画投稿 Contorller
+ * 動画コンテンツ Contorller
  */
-class PostVideoController extends Controller {
+class PostVideoContentsController extends Controller {
     
-    /** 動画投稿 Service */
-    private PostVideoService $service;
+    /** 動画コンテンツ Service */
+    private VideoContentsService $service;
 
     /**
      * コンストラクタ
      */
-    public function __construct(PostVideoService $service) {
+    public function __construct(VideoContentsService $service) {
         $this->service = $service;
     }
 
@@ -30,7 +30,7 @@ class PostVideoController extends Controller {
      * @param Request $request リクエスト
      * @return Object レスポンス
      */
-    public function postVideo(Request $request) {
+    public function registerVideoContents(Request $request) {
         $data = [
             'title' => $request->title,
             'thumbnail' => [
@@ -41,10 +41,10 @@ class PostVideoController extends Controller {
                 'name' => $request->video['name'],
                 'file' => $request->video['file'],
             ],
-            'videoPostId' => null,
+            'videoContentsId' => null,
             'created_by' => Auth::user()->id,
         ];
-        $result = $this->service->postVideo($data);
+        $result = $this->service->registerVideoContents($data);
 
         return $result[0] ? ResponseHelper::responseSuccess($result[1]) : ResponseHelper::responseFailure($result[1]);
     }

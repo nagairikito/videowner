@@ -8,7 +8,7 @@ use App\Services\AuthService;
 use Illuminate\Http\Request;
 
 /**
- * ログイン Contorller
+ * 認証 Contorller
  */
 class AuthController extends Controller {
     

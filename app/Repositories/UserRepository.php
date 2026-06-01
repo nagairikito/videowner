@@ -5,7 +5,7 @@ namespace App\Repositories;
 use App\Models\User;
 
 /**
- * 新規ユーザー登録 Repository
+ * ユーザー Repository
  */
 class UserRepository extends Repository {
 

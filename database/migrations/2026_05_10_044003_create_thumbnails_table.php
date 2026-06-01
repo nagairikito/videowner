@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('file_name');
             $table->string('file_path');
-            $table->string('video_post_id');
+            $table->string('video_contents_id');
             $table->integer('created_by');
             $table->integer('delete_flag')->default(0);
             $table->timestamps();

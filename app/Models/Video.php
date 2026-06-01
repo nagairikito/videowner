@@ -16,7 +16,7 @@ class Video extends Model
     protected $fillable = [
         'file_name',
         'file_path',
-        'video_post_id',
+        'video_contents_id',
         'created_by',
         'delete_flag',
     ];

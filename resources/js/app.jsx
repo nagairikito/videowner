@@ -14,8 +14,9 @@ import Signup from './components/signup/Signup';
 import Login from './components/login/Login';
 import ProtectedRoute from './middleware/ProtectedRoute';
 import Profile from './components/profile/Profile';
+import VideoContentsList from './components/videoContentsList/VideoContentsList';
+import VideoContentsDetail from './components/videoContentsDetail/VideoContentsDetail';
 import PostVideo from './components/postVideo/PostVideo';
-import PostVideo from './components/videoList/VideoList';
 
 export const AuthContext = createContext();
 
@@ -45,7 +46,8 @@ function App() {
                     <Route path={URL_CONST.SIGNUP} element={<Signup />} /> {/* 新規ユーザー登録 */}
                     <Route path={URL_CONST.LOGIN} element={<Login />} /> {/* ログインフォーム */}
                     <Route path={URL_CONST.PROFILE} element={<Profile />} /> {/* ユーザー詳細 */}
-                    <Route path={URL_CONST.VIDEO_LIST} element={<VideoList />} /> {/* 動画一覧 */}
+                    <Route path={URL_CONST.VIDEO_CONTENTS_LIST} element={<VideoContentsList />} /> {/* 動画一覧 */}
+                    <Route path={URL_CONST.VIDEO_CONTENTS_DETAIL} element={<VideoContentsDetail />} /> {/* 動画詳細 */}
 
                     {/* ログイン認証時 */}
                     <Route element={<ProtectedRoute />}>

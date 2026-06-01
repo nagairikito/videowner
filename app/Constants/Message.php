@@ -30,5 +30,10 @@ class Message {
         "LOGOUT_SUCCESS" => "ログアウトしました。",
         "UNAUTHRISED_ACCESS" => "不正なアクセスを検知したため、強制ログアウトします。"
     ];
+
+    // 動画コンテンツ
+    const VIDEO_CONTENTS_DETAIL = [
+        "GET_FAIL" => "コンテンツの取得に失敗しました。",
+    ];
         
 }

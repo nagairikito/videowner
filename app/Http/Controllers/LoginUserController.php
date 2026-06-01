@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 /**
- * ログイン Contorller
+ * ログインユーザー Contorller
  */
 class LoginUserController extends Controller {
     
