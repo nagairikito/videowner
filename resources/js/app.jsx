@@ -7,7 +7,7 @@ import { useState, useEffect, createContext } from 'react';
 
 import API_URL_CONST from './constants/apiUrlConst';
 import URL_CONST from './constants/urlConst';
-import Bean from './constants/bean';
+import Bean from './utils/bean';
 import Header from './components/common/header/Header';
 import Home from './components/home/Home';
 import Signup from './components/signup/Signup';

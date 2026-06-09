@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Bean from '../../constants/bean';
+import Bean from '../../utils/bean';
 import API_URL_CONST from '../../constants/apiUrlConst';
 import URL_CONST from '../../constants/urlConst';
 
@@ -12,11 +12,11 @@ const VideoContentsList = () => {
     useEffect(() => {
         Bean.fetchGetApi(API_URL_CONST.VIDEO_CONTENTS_LIST)
         .then(async (res) => {
+            const resResult = await res.json();
             if(res.ok) {
-                const resResult = await res.json();
                 setVideoContentsList(resResult);
             } else {
-                setErrMsg(res.json());
+                setErrMsg(resResult);
             }
         })
     }, []);
@@ -31,6 +31,10 @@ const VideoContentsList = () => {
                         <Link to={URL_CONST.VIDEO_CONTENTS_DETAIL + "?id=" + contents.videoId}>
                             <img src={contents.thumbnailPath} />
                             <p>{contents.title}</p>
+                            <p>{contents.updatedAt}</p>
+                        </Link>
+                        <Link to={URL_CONST.PROFILE + "?id=" + contents.userId}>
+                            <p>{contents.userName}</p>
                         </Link>
                     </div>
                 ))

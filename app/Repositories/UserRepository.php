@@ -20,6 +20,18 @@ class UserRepository extends Repository {
     }
 
     /**
+     * IDによるユーザー単体取得
+     * 
+     * @param int $id ログインID
+     * @return User|null ユーザー情報、存在しない場合はnull 
+     */
+    public function getUserById(int $id) : ?User {
+        $user = $this->repository->where('id', $id)->first();
+
+        return $user;
+    }
+
+    /**
      * ログインIDによるユーザー単体取得
      * 
      * @param string $loginId ログインID

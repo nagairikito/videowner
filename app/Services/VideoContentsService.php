@@ -36,10 +36,10 @@ class VideoContentsService extends Service {
      * 
      * @return array 動画コンテンツ一覧
      */
-    public function getVideoContentsList() {
+    public function getVideoContentsList(array $conditions = []) {
         $processedList = [];
 
-        $videoContentsList = $this->videoContentsRep->getVideoContentsList();
+        $videoContentsList = $this->videoContentsRep->getVideoContentsList($conditions);
         if($videoContentsList != []) {
             foreach($videoContentsList as $data) {
                 $processedData = [
@@ -47,10 +47,10 @@ class VideoContentsService extends Service {
                     'title' => $data['title'],
                     'updatedAt' => $data['updated_at'],
                     'thumbnailName' => $data['thumbnail_name'],
-                    'thumbnailPath' => $data['thumbnail_path'],
+                    'thumbnailPath' => asset('storage/' . $data['thumbnail_path']),
                     'videoId' => $data['video_id'],
                     'videoName' => $data['video_name'],
-                    'videoPath' => $data['video_path'],
+                    'videoPath' => asset('storage/' . $data['video_path']),
                     'userId' => $data['user_id'],
                     'userName' => $data['user_name'],
                 ];
@@ -78,10 +78,10 @@ class VideoContentsService extends Service {
                 'title' => $videoContentsDetail['title'],
                 'updatedAt' => $videoContentsDetail['updated_at'],
                 'thumbnailName' => $videoContentsDetail['thumbnail_name'],
-                'thumbnailPath' => $videoContentsDetail['thumbnail_path'],
+                'thumbnailPath' => asset('storage/' . $videoContentsDetail['thumbnail_path']),
                 'videoId' => $videoContentsDetail['video_id'],
                 'videoName' => $videoContentsDetail['video_name'],
-                'videoPath' => $videoContentsDetail['video_path'],
+                'videoPath' => asset('storage/' . $videoContentsDetail['video_path']),
                 'userId' => $videoContentsDetail['user_id'],
                 'userName' => $videoContentsDetail['user_name'],
             ];
@@ -112,7 +112,7 @@ class VideoContentsService extends Service {
 
                 $data['thumbnail']['file'] = $thumbnailPath;
                 $data['video']['file'] = $videoPath;
-Log::info($data);
+
                 $this->thumbnailRep->registerThumbnail($data);
                 $this->videoRep->registerVideo($data);
             });

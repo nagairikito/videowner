@@ -24,6 +24,7 @@ class LoginUserController extends Controller {
             $loginUser = [
                 'loginMessage' => '認証済',
                 'loginUser' => [
+                    'id' => Auth::user()->id,
                     'userName' => Auth::user()->user_name,
                     'loginId' => Auth::user()->login_id,
                 ],

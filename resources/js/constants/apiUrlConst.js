@@ -12,6 +12,9 @@ const API_URL_CONST = {
     // ログアウト
     LOGOUT: '/api/logout',
 
+    // プロフィール
+    PROFILE: (id) => `/api/profile?user_id=${id}`,
+
     // 動画リスト
     VIDEO_CONTENTS_LIST: '/api/video_contents_list',
 

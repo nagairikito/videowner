@@ -1,4 +1,4 @@
-import MESSAGE from "./message";
+import MESSAGE from "../constants/message";
 import API_URL_CONST from '../constants/apiUrlConst';
 
 /**

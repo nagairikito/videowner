@@ -12,7 +12,7 @@ const Header = () => {
             <div className="header-wrapper">
                 { loginUserRes?.loginUser?.loginId ?
                     <div>
-                        <Link to={URL_CONST.PROFILE}>{loginUserRes.loginUser.userName}</Link> 
+                        <Link to={URL_CONST.PROFILE + "?id=" + loginUserRes?.loginUser?.id}>{loginUserRes.loginUser.userName}</Link> 
                         <Link to={URL_CONST.POST_VIDEO}>動画投稿</Link>
                     </div>
                 : 

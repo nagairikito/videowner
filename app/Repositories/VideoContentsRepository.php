@@ -24,12 +24,22 @@ class VideoContentsRepository extends Repository {
      * 
      * @return VideoContents|array 動画コンテンツ情リスト、存在しない場合は空配列 
      */
-    public function getVideoContentsList() : VideoContents|array {
+    public function getVideoContentsList(array $conditions = []) : VideoContents|array {
+        
+        $wheres = [];
+
+        if(array_key_exists('userIds', $conditions) && count($conditions['userIds']) > 0 ) {
+            foreach($conditions['userIds'] as $id) {
+                $wheres[] = ['video_contents.created_by', '=', $id];
+            }
+        }
+
         $videoContents = $this->repository
             ->join('thumbnails', 'video_contents.id', 'thumbnails.video_contents_id')
             ->join('videos', 'video_contents.id', 'videos.video_contents_id')
             ->join('users', 'video_contents.created_by', 'users.id')
             ->where('video_contents.delete_flag', 0)
+            ->where($wheres)
             ->select([
                 'video_contents.id',
                 'video_contents.title',

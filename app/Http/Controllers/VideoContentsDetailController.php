@@ -15,7 +15,7 @@ use App\Services\VideoContentsService;
  */
 class VideoContentsDetailController extends Controller {
     
-    /** 動画 Service */
+    /** 動画コンテンツ Service */
     private VideoContentsService $service;
 
     /**

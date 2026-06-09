@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { AuthContext } from '../../app.jsx';
-import Bean from '../../constants/bean.jsx';
+import Bean from '../../utils/bean.jsx';
 import API_URL_CONST from '../../constants/apiUrlConst.js';
 import URL_CONST from '../../constants/urlConst.js';
 

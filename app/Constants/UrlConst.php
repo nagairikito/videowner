@@ -18,6 +18,9 @@ class UrlConst {
 
     // 動画リスト
     const VIDEO_CONTENTS_LIST = "/video_contents_list";
+
+    // 動画リスト
+    const PROFILE = "/profile";
         
     // 動画詳細
     const VIDEO_CONTENTS_DETAIL = '/video';
