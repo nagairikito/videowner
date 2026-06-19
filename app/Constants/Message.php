@@ -28,12 +28,20 @@ class Message {
     // ログアウト
     const LOGOUT = [
         "LOGOUT_SUCCESS" => "ログアウトしました。",
-        "UNAUTHRISED_ACCESS" => "不正なアクセスを検知したため、強制ログアウトします。"
+        "UNAUTHRISED_ACCESS" => "不正なアクセスを検知したため、強制ログアウトします。",
     ];
 
     // 動画コンテンツ
     const VIDEO_CONTENTS_DETAIL = [
         "GET_FAIL" => "コンテンツの取得に失敗しました。",
+    ];
+        
+    // 動画コンテンツ削除
+    const DELETE_VIDEO_CONTENTS = [
+        "NOT_FOUND_VIDEO_CONTENTS" => "コンテンツの取得に失敗しました。",
+        "MISMATCH_USER_ID" => "投稿者でないユーザーからの不正アクセスを検知しました。",
+        "DELETE_FAIL" => "対象のコンテンツの削除に失敗しました。",
+        "DELETE_SUCCESS" => "対象のコンテンツを削除しました。",
     ];
         
 }

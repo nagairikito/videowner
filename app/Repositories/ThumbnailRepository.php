@@ -45,4 +45,18 @@ class ThumbnailRepository extends Repository {
 
         return $this->repository->save();
     }
+
+    /**
+     * サムネイル削除（ハードデリート）
+     * 
+     * @param int $id サムネイルID
+     * @return bool 登録結果（成功ならtrue、失敗ならfalse）
+     */
+    public function deleteThumbnail(int $id) : bool {
+        $result = $this->repository
+                    ->where('id', $id)
+                    ->delete();
+
+        return $result;
+    }
 }

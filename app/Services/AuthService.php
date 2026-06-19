@@ -49,6 +49,7 @@ class AuthService extends Service {
         $exportData = [
             'message' => Message::LOGIN["LOGIN_SUCCESS"],
             'loginUser' => [
+                'id' => Auth::User()->id,
                 'userName' => Auth::user()->user_name,
                 'loginId' => Auth::user()->login_id,
             ],
@@ -65,11 +66,11 @@ class AuthService extends Service {
     public function logout(array $data) : array {
         $result = [
             true, 
-            ["message" => Message::LOGOUT['LOGOUT_SUCCESS']],
+            ["message" => Message::LOGOUT["LOGOUT_SUCCESS"]],
         ];
 
         if(Auth::id() == $data['systemId']) {
-            $result[1] = Message::LOGOUT['UNAUTHRISED_ACCESS'];
+            $result[1] = Message::LOGOUT["UNAUTHRISED_ACCESS"];
         }
 
         Auth::logout();

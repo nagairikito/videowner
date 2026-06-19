@@ -13,7 +13,7 @@ const VideoContentsDetail = () => {
     const [errMsg, setErrMsg] = useState({});
 
     useEffect(() => {
-        Bean.fetchGetApi(API_URL_CONST.VIDEO_DETAIL(videoId))
+        Bean.fetchGetApi(API_URL_CONST.VIDEO_CONTENTS_DETAIL(videoId))
         .then(async (res) => {
             if(res.ok) {
                 const resResult = await res.json();

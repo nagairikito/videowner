@@ -19,10 +19,16 @@ const API_URL_CONST = {
     VIDEO_CONTENTS_LIST: '/api/video_contents_list',
 
     // 動画詳細
-    VIDEO_DETAIL: (id) => `/api/video?id=${id}`,
+    VIDEO_CONTENTS_DETAIL: (id) => `/api/video?id=${id}`,
 
     // 動画投稿
     POST_VIDEO: '/api/post_video',
+
+    // 動画コンテンツ編集
+    EDIT_VIDEO_CONTENTS: '/api/edit_video_contents',
+
+    // 動画コンテンツ削除
+    DELETE_VIDEO_CONTENTS: '/api/delete_video_contents',
 
 }
 

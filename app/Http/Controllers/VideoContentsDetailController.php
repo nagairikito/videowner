@@ -30,11 +30,11 @@ class VideoContentsDetailController extends Controller {
      * 
      */
     public function getVideoContentsDetail(Request $request) {
-        $videoId = $request->query('id');
+        $videoContentsId = $request->query('id');
 
-        $video = $this->service->getVideoContentsDetail($videoId);
+        $videoContents = $this->service->getVideoContentsDetail($videoContentsId);
 
-        return $video != [] ? ResponseHelper::responseSuccess($video) : ResponseHelper::responseFailure(Message::VIDEO_CONTENTS_DETAIL["GET_FAIL"]);
+        return $videoContents != [] ? ResponseHelper::responseSuccess($videoContents) : ResponseHelper::responseFailure(Message::VIDEO_CONTENTS_DETAIL["GET_FAIL"]);
     }
 
 }

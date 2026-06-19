@@ -15,6 +15,9 @@ const URL_CONST = {
     // 動画投稿フォーム
     POST_VIDEO: '/post_video',
 
+    // 動画コンテンツ編集フォーム
+    EDIT_VIDEO_CONTENTS: '/edit_video_contents',
+
     // 動画コンテンツ一覧
     VIDEO_CONTENTS_LIST: '/video_contents_list',
 

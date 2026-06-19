@@ -14,7 +14,7 @@ const Login = () => {
     }
 
     const navigate = useNavigate();
-    const { loginUserRes, setLoginUserRes } = useContext(AuthContext);
+    const { loginUserRes, setLoginUserRes, setAuthLoading } = useContext(AuthContext);
     const isFirstRender = useRef(true);
     const isFirstSubmit = useRef(true);
     const [form, setForm] = useState(initialForm);
@@ -57,6 +57,7 @@ const Login = () => {
         const resResult = await response.json();
         if(response.ok) {
             setLoginUserRes(resResult);
+            setAuthLoading(false);
             navigate(URL_CONST.HOME);
         } else {
             // const errorMsg = await response.json();

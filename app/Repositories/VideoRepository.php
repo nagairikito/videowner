@@ -45,4 +45,18 @@ class VideoRepository extends Repository {
 
         return $this->repository->save();
     }
+
+    /**
+     * 動画削除(ハードデリート)
+     * 
+     * @param int $id 動画ID
+     * @return bool 登録結果（成功ならtrue、失敗ならfalse）
+     */
+    public function deleteVideo(int $id) : bool {
+        $result = $this->repository
+                    ->where('id', $id)
+                    ->delete();
+
+        return $result;
+    }
 }

@@ -28,4 +28,10 @@ class UrlConst {
     // 動画投稿
     const POST_VIDEO = "/post_video";
         
+    // 動画コンテンツ編集
+    const EDIT_VIDEO_CONTENTS = "/edit_video_contentns";
+        
+    // 動画コンテンツ削除
+    const DELETE_VIDEO_CONTENTS = "/delete_video_contents";
+        
 }

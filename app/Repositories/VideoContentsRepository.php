@@ -74,6 +74,7 @@ class VideoContentsRepository extends Repository {
                 'video_contents.id',
                 'video_contents.title',
                 'video_contents.updated_at',
+                'thumbnails.id as thumbnail_id',
                 'thumbnails.file_name as thumbnail_name',
                 'thumbnails.file_path as thumbnail_path',
                 'videos.id as video_id',
@@ -100,5 +101,19 @@ class VideoContentsRepository extends Repository {
         ]);
 
         return $videoContents;
+    }
+
+    /**
+     * 動画コンテンツ削除(ハードデリート)
+     * 
+     * @param int $id 動画コンテンツID
+     * @return bool $result 削除結果
+     */
+    public function deleteVideoContents(int $id) : bool {
+        $result = $this->repository
+        ->where('id', $id)
+        ->delete();
+
+        return $result;
     }
 }

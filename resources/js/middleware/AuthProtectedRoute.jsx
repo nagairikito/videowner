@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import { AuthContext } from '../app.jsx';
 
-const ProtectedRoute = () => {
+const AuthProtectedRoute = () => {
     const { loginUserRes } = useContext(AuthContext);
 
     if (!loginUserRes) {
@@ -13,4 +13,4 @@ const ProtectedRoute = () => {
     return <Outlet />;
 };
 
-export default ProtectedRoute;
+export default AuthProtectedRoute;
