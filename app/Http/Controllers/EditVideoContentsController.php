@@ -36,15 +36,17 @@ class EditVideoContentsController extends Controller {
             'thumbnail' => [
                 'name' => $request->thumbnail['name'],
                 'file' => $request->thumbnail['file'],
+                'path' => $request->thumbnail['path'],
             ],
             'video' => [
                 'name' => $request->video['name'],
                 'file' => $request->video['file'],
+                'path' => $request->video['path'],
             ],
-            'videoContentsId' => null,
+            'videoContentsId' => $request->videoContentsId,
             'created_by' => Auth::user()->id,
         ];
-        $result = $this->service->registerVideoContents($data);
+        $result = $this->service->editVideoContents($data);
 
         return $result[0] ? ResponseHelper::responseSuccess($result[1]) : ResponseHelper::responseFailure($result[1]);
     }

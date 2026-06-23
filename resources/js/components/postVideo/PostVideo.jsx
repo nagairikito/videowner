@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 
 import { AuthContext } from '../../app.jsx';
 import Bean from '../../utils/bean.jsx';
+import PostVideoFormValidation from '../../validations/PostVideoFormValidation.jsx';
 import API_URL_CONST from '../../constants/apiUrlConst.js';
 import URL_CONST from '../../constants/urlConst.js';
 
@@ -60,7 +61,7 @@ const PostVideo = () => {
             return;
         }
 
-        const resultValidMsgs = Bean.postVideoForm(form);
+        const resultValidMsgs = PostVideoFormValidation(form);
         setValidMsgs(resultValidMsgs);
         
     }, [form]);
@@ -70,7 +71,7 @@ const PostVideo = () => {
         if(isFirstSubmit) isFirstSubmit.current = false;
 
         // バリデーション
-        const resultValidMsgs = Bean.postVideoForm(form);
+        const resultValidMsgs = PostVideoFormValidation(form);
         if(Object.keys(resultValidMsgs).length > 0) {
             setValidMsgs(resultValidMsgs);
             return;

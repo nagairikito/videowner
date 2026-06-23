@@ -47,6 +47,21 @@ class VideoRepository extends Repository {
     }
 
     /**
+     * 動画更新
+     * 
+     * @param array $data 入力情報
+     * @return bool 登録結果（成功ならtrue、失敗ならfalse）
+     */
+    public function updateVideo(array $data) : bool {
+        $target = $this->repository->find($data['video']['id']);
+
+        $target->file_name = $data['video']['name'];
+        $target->file_path = $data['video']['file'];
+
+        return $target->save();
+    }
+
+    /**
      * 動画削除(ハードデリート)
      * 
      * @param int $id 動画ID

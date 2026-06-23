@@ -35,12 +35,6 @@ const Profile = () => {
     const getProfile = () => {
         Bean.fetchGetApi(API_URL_CONST.PROFILE(userId))
         .then(async (res) => {
-            // const resResult = await res.json();
-            // if(res.ok) {
-            //     setProfile(resResult);
-            // } else {
-            //     setErrMsg(resResult);
-            // }
             if(res.ok) {
                 const resResult = await res.json();
                 setProfile(resResult);

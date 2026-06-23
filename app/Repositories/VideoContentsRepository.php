@@ -104,6 +104,19 @@ class VideoContentsRepository extends Repository {
     }
 
     /**
+     * 動画コンテンツ更新
+     * 
+     * @param array $data 入力情報
+     * @return bool 登録結果（成功ならVideoPostオブジェクト、失敗なら例外）
+     */
+    public function updateVideoContents(array $data) : bool {
+        $target = $this->repository->find($data['videoContentsId']);
+        $target->title = $data['title'];
+        
+        return $target->save();
+    }
+
+    /**
      * 動画コンテンツ削除(ハードデリート)
      * 
      * @param int $id 動画コンテンツID

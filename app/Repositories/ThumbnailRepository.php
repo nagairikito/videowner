@@ -47,6 +47,21 @@ class ThumbnailRepository extends Repository {
     }
 
     /**
+     * サムネイル更新
+     * 
+     * @param array $data 入力情報
+     * @return bool 登録結果（成功ならtrue、失敗ならfalse）
+     */
+    public function updateThumbnail(array $data) : bool {
+        $target = $this->repository->find($data['thumbnail']['id']);
+
+        $target->file_name = $data['thumbnail']['name'];
+        $target->file_path = $data['thumbnail']['file'];
+
+        return $target->save();
+    }
+
+    /**
      * サムネイル削除（ハードデリート）
      * 
      * @param int $id サムネイルID

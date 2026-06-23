@@ -5,6 +5,7 @@ import { AuthContext } from '../../app.jsx';
 import Bean from '../../utils/bean.jsx';
 import API_URL_CONST from '../../constants/apiUrlConst.js';
 import URL_CONST from '../../constants/urlConst.js';
+import EditVideoFormValidation from '../../validations/EditVideoFormValidation.jsx';
 
 
 const EditVideoContents = () => {
@@ -19,6 +20,7 @@ const EditVideoContents = () => {
         },
         video: {
             name: '',
+            file: '',
             path: '',
         },
     }
@@ -41,7 +43,6 @@ const EditVideoContents = () => {
             const videoContentsRes = await res.json();
 
             if(loginUserRes?.loginUser?.id != videoContentsRes?.video.userId ) {
-                console.log("f1")
                 setErrMsg({'errMsg': 'エラー'});
                 return;
             }
@@ -62,9 +63,7 @@ const EditVideoContents = () => {
                     }
                 };
                 setForm(data);
-                console.log(videoContentsRes)
             } else {
-                console.log("f2")
                 setErrMsg(videoContentsRes);
             }
         })
@@ -80,7 +79,7 @@ const EditVideoContents = () => {
             return;
         }
 
-        const resultValidMsgs = Bean.postVideoForm(form);
+        const resultValidMsgs = EditVideoFormValidation(form);
         setValidMsgs(resultValidMsgs);
         
     }, [form]);
@@ -114,15 +113,16 @@ const EditVideoContents = () => {
         if(isFirstSubmit) isFirstSubmit.current = false;
 
         // バリデーション
-        const resultValidMsgs = Bean.postVideoForm(form);
+        const resultValidMsgs = EditVideoFormValidation(form);
+
         if(Object.keys(resultValidMsgs).length > 0) {
             setValidMsgs(resultValidMsgs);
             return;
         }
-
-        const response = await Bean.fecthPostFileApi(API_URL_CONST.POST_VIDEO, form);
+console.log(form)
+        const response = await Bean.fecthPostFileApi(API_URL_CONST.EDIT_VIDEO_CONTENTS, form);
         if(response.ok) {
-            navigate(URL_CONST.HOME);
+            navigate(URL_CONST.PROFILE + '?id=' + loginUserRes.loginUser.id);
         } else {
             const errorMsg = await response.json();
             setErrMsg(errorMsg.resErrMsg);

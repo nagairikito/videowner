@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import API_URL_CONST from '../../constants/apiUrlConst.js';
 import URL_CONST from '../../constants/urlConst.js';
 import Bean from '../../utils/bean.jsx';
+import SignupFormValidation from '../../validations/SignupFormValidation.jsx';
 
 const Signup = () => {
 

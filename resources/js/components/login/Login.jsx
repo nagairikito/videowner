@@ -5,6 +5,7 @@ import { AuthContext } from '../../app.jsx';
 import API_URL_CONST from '../../constants/apiUrlConst.js';
 import URL_CONST from '../../constants/urlConst.js';
 import Bean from '../../utils/bean.jsx';
+import LoginFormValidations from '../../validations/LoginFormValidation.jsx';
 
 const Login = () => {
 
@@ -47,7 +48,7 @@ const Login = () => {
         if(isFirstRender) isFirstRender.current = false;
 
         //バリデーション
-        const resultValidMsg = Bean.loginFormValidation(form);
+        const resultValidMsg = LoginFormValidations(form);
         if (Object.keys(resultValidMsg).length > 0) {
             setValidMsgs(resultValidMsg);
             return;

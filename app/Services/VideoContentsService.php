@@ -107,6 +107,8 @@ class VideoContentsService extends Service {
 
         try {
             DB::transaction(function() use ($data, $thumbnailPath, $videoPath) {
+                $data['thumbnail']['name'] = Bean::generateAlphanumeric() . '_' . $data['thumbnail']['name'];
+                $data['video']['name'] = Bean::generateAlphanumeric() . '_' . $data['video']['name'];
                 $videoContents = $this->videoContentsRep->registerVideoContents($data);
 
                 $data['videoContentsId'] = $videoContents->id;
@@ -118,6 +120,72 @@ class VideoContentsService extends Service {
 
                 $this->thumbnailRep->registerThumbnail($data);
                 $this->videoRep->registerVideo($data);
+            });
+            
+            return [true, '処理成功'];
+        } catch(Exception $e) {
+            Log::error($e);
+            if($thumbnailPath && Storage::disk('public')->exists($thumbnailPath)) {
+                Storage::disk('public')->delete($thumbnailPath);
+            }
+            if($videoPath && Storage::disk('public')->exists($videoPath)) {
+                Storage::disk('public')->delete($videoPath);
+            }
+
+            return [false, $e];
+        }
+    }
+
+    /**
+     * 動画コンテンツ編集
+     * 
+     * @param array $data 入力情報
+     * @return array 登録結果(成功：true、失敗：false), 成功：ユーザー情報、失敗：エラーメッセージ
+     */
+    public function editVideoContents(array $data) : array {
+        $thumbnailPath = null;
+        $videoPath = null;
+
+        try {
+            DB::transaction(function() use ($data, $thumbnailPath, $videoPath) {
+                $target = $this->getVideoContentsDetail($data['videoContentsId']);
+                $data['thumbnail']['id'] = $target['video']['thumbnailId'];
+                $data['video']['id'] = $target['video']['videoId'];
+
+                $this->videoContentsRep->updateVideoContents($data);
+
+                if($data['thumbnail']['file'] != null || $data['thumbnail']['file'] != '' && $data['thumbnail']['path'] == '') {
+                    $thumbnailName = Bean::generateAlphanumeric() . '_' . $data['thumbnail']['name'];
+                    $thumbnailPath = StorageHelper::storeNamedFileToStorage($data['thumbnail']['file'], 'thumbnail', $thumbnailName);
+                    $data['thumbnail']['file'] = $thumbnailPath;
+                } else {
+                    $path = Bean::getWordFromTarget('thumbnail/', $data['thumbnail']['path']);
+                    $data['thumbnail']['file'] = $path;
+                }
+                $this->thumbnailRep->updateThumbnail($data);
+
+                if($data['video']['file'] != null || $data['video']['file'] != '' && $data['video']['path'] == '') {
+                    $videoName = Bean::generateAlphanumeric() . '_' . $data['video']['name'];
+                    $videoPath = StorageHelper::storeNamedFileToStorage($data['video']['file'], 'video', $videoName);
+                    $data['video']['file'] = $videoPath;
+                } else {
+                    $path = Bean::getWordFromTarget('video/', $data['video']['path']);
+                    $data['video']['file'] = $path;
+                }
+                $this->videoRep->updateVideo($data);
+
+                if($data['thumbnail']['file'] != '' && $data['thumbnail']['path'] == '') {
+                    Log::info('t');
+                    $targetThumbnailPath = Bean::getWordFromTarget('thumbnail/', $target['video']['thumbnailPath']);
+                    StorageHelper::deleteFileFromStorage($targetThumbnailPath);
+                }
+                
+                if($data['video']['file'] != '' && $data['video']['path'] == '') {
+                    Log::info('v');
+
+                    $targetVideoPath = Bean::getWordFromTarget('video/', $target['video']['videoPath']);
+                    StorageHelper::deleteFileFromStorage($targetVideoPath);
+                }
             });
             
             return [true, '処理成功'];

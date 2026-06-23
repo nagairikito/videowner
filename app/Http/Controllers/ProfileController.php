@@ -34,7 +34,7 @@ class ProfileController extends Controller {
      * 
      */
     public function getProfile(Request $request) {
-        $userId = $request->query('user_id');
+        $userId = intval($request->query('user_id'));
         $conditions = ['userIds' => [$userId]];
 
         $user = $this->userRepository->getUserById($userId);
