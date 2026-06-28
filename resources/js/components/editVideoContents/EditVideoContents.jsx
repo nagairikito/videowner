@@ -23,6 +23,7 @@ const EditVideoContents = () => {
             file: '',
             path: '',
         },
+        publishedFlag: null,
     }
     
     const { loginUserRes } = useContext(AuthContext);
@@ -60,7 +61,8 @@ const EditVideoContents = () => {
                         name: videoContentsRes.video.videoName,
                         file: '',
                         path: videoContentsRes.video.videoPath,
-                    }
+                    },
+                    publishedFlag: videoContentsRes.video.publishedFlag == 1 ? true : false,
                 };
                 setForm(data);
             } else {
@@ -100,6 +102,11 @@ const EditVideoContents = () => {
                     path: '',
                 }
             });
+        } else if(e.target.name === "publishedFlag") {
+            setForm({
+                ...form,
+                [e.target.name]: e.target.checked,
+            });
         } else {
             setForm({
                 ...form,
@@ -119,7 +126,7 @@ const EditVideoContents = () => {
             setValidMsgs(resultValidMsgs);
             return;
         }
-console.log(form)
+
         const response = await Bean.fecthPostFileApi(API_URL_CONST.EDIT_VIDEO_CONTENTS, form);
         if(response.ok) {
             navigate(URL_CONST.PROFILE + '?id=' + loginUserRes.loginUser.id);
@@ -166,6 +173,10 @@ console.log(form)
                     { (validMsgs.contents?.length > 0) && validMsgs.contents.map((msg, key) => (
                         <div key={key}>{msg}</div>
                     ))}
+                </div>
+                <div>
+                    <p>公開/非公開</p>
+                    <input type="checkbox" name="publishedFlag" checked={form.publishedFlag} onChange={handleChange} />
                 </div>
                 <div>
                     <input type="submit" value="投稿" onClick={handleSubmit} />

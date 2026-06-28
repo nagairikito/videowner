@@ -20,6 +20,7 @@ const PostVideo = () => {
             name: '',
             file: '',
         },
+        publishedFlag: true
     }
     
     const navigate = useNavigate();
@@ -31,9 +32,9 @@ const PostVideo = () => {
 
     const handleChange = (e) => {
 
-        const condition = e.target.type === "file" && e.target.name === "thumbnail" || e.target.type === "file" && e.target.name === "video";
-
-        if(condition) {
+        if(e.target.type === "file" && e.target.name === "thumbnail" || 
+            e.target.type === "file" && e.target.name === "video"
+        ) {
             const inputFile = e.target.files[0];
 
             setForm({
@@ -42,6 +43,11 @@ const PostVideo = () => {
                     name: inputFile.name,
                     file: inputFile,
                 }
+            });
+        } else if(e.target.name === "publishedFlag") {
+            setForm({
+                ...form,
+                [e.target.name]: e.target.checked,
             });
         } else {
             setForm({
@@ -63,7 +69,6 @@ const PostVideo = () => {
 
         const resultValidMsgs = PostVideoFormValidation(form);
         setValidMsgs(resultValidMsgs);
-        
     }, [form]);
 
     const handleSubmit = async(e) => {
@@ -111,6 +116,10 @@ const PostVideo = () => {
                     { (validMsgs.contents?.length > 0) && validMsgs.contents.map((msg, key) => (
                         <div key={key}>{msg}</div>
                     ))}
+                </div>
+                <div>
+                    <p>公開/非公開</p>
+                    <input type="checkbox" name="publishedFlag" checked={form.publishedFlag} onChange={handleChange}/>
                 </div>
                 <div>
                     <input type="submit" value="投稿" onClick={handleSubmit} />

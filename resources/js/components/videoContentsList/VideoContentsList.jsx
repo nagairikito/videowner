@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom';
 import Bean from '../../utils/bean';
 import API_URL_CONST from '../../constants/apiUrlConst';
 import URL_CONST from '../../constants/urlConst';
+import VideoContentslistParts from '../videoContentsListParts/VideoContentsListParts';
+import Loading from '../loading/Loading';
 
 const VideoContentsList = () => {
 
-    const [videoContentsList, setVideoContentsList] = useState({});
-    const [errMsg, setErrMsg] = useState({});
+    const [videoContentsList, setVideoContentsList] = useState([]);
+    const [errMsg, setErrMsg] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         Bean.fetchGetApi(API_URL_CONST.VIDEO_CONTENTS_LIST)
@@ -15,31 +18,26 @@ const VideoContentsList = () => {
             const resResult = await res.json();
             if(res.ok) {
                 setVideoContentsList(resResult);
+                console.log(resResult)
+
             } else {
                 setErrMsg(resResult);
             }
-        })
+        });
+
+        setLoading(false);
     }, []);
+
+    if(loading) {
+        return (
+            <Loading />
+        );
+    }
 
     return (
         <>
-        <h2>動画一覧</h2>
-        <div className="video-contents-list">
-            {videoContentsList.length > 0 && 
-                videoContentsList.map((contents, key) => (
-                    <div className="video-contents" key={key}>
-                        <Link to={URL_CONST.VIDEO_CONTENTS_DETAIL + "?id=" + contents.videoId}>
-                            <img src={contents.thumbnailPath} />
-                            <p>{contents.title}</p>
-                            <p>{contents.updatedAt}</p>
-                        </Link>
-                        <Link to={URL_CONST.PROFILE + "?id=" + contents.userId}>
-                            <p>{contents.userName}</p>
-                        </Link>
-                    </div>
-                ))
-            }
-        </div>
+            <h2>動画一覧</h2>
+            <VideoContentslistParts list={videoContentsList} />
         </>
     );
 }

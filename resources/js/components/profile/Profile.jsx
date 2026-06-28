@@ -4,6 +4,8 @@ import { AuthContext } from '../../app';
 import URL_CONST from '../../constants/urlConst.js';
 import API_URL_CONST from '../../constants/apiUrlConst.js';
 import Bean from '../../utils/bean.jsx';
+import VideoContentsListParts from '../videoContentsListParts/VideoContentsListParts.jsx';
+import Loading from '../loading/Loading.jsx';
 
 const Profile = () => {
     const { loginUserRes, setLoginUserRes, fetchUser } = useContext(AuthContext);
@@ -12,6 +14,7 @@ const Profile = () => {
     const navigate = useNavigate();
     const [errMsg, setErrMsg] = useState({})
     const [profile, setProfile] = useState({});
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getProfile();
@@ -42,6 +45,9 @@ const Profile = () => {
                 const resResult = await res.json();
                 setErrMsg(resResult);
             }
+        })
+        .finally(() => {
+            setLoading(false);
         });
     }
 
@@ -62,6 +68,12 @@ const Profile = () => {
         });
     }
 
+    if(loading) {
+        return (
+            <Loading />
+        );
+    }
+
     return (
         <>
             {loginUserRes != null && 
@@ -71,23 +83,11 @@ const Profile = () => {
             }
 
             <h2>動画一覧</h2>
-            <div className="video-contents-list">
-                {profile?.videoContentsList?.length > 0 && 
-                    profile.videoContentsList.map((contents, key) => (
-                        <div className="video-contents" key={key}>
-                            <Link to={URL_CONST.VIDEO_CONTENTS_DETAIL + "?id=" + contents.videoContentsId}>
-                                <img src={contents.thumbnailPath} />
-                                <p>{contents.title}</p>
-                            </Link>
-                            <Link to={URL_CONST.EDIT_VIDEO_CONTENTS + "?id=" + contents.videoContentsId}>
-                                <p>編集</p>
-                            </Link>
-                            <button onClick={() => deleteVideoContents(contents.videoContentsId)}>削除</button>
-                        </div>
-                    ))
-                }
-            </div>
-
+            <VideoContentsListParts 
+                list={profile?.videoContentsList}
+                deleteVideoContents={deleteVideoContents}
+                loginUserRes={loginUserRes}
+            />
         </>
     );
 }

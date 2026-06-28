@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Services\VideoContentsService;
-
+use App\Constants\SystemConst;
 
 /**
  * 動画コンテンツ Contorller
@@ -41,6 +41,7 @@ class PostVideoContentsController extends Controller {
                 'name' => $request->video['name'],
                 'file' => $request->video['file'],
             ],
+            'publishedFlag' => ($request->publishedFlag) ? SystemConst::VIDEO_CONTENTS['PUBLISHED'] : SystemConst::VIDEO_CONTENTS['PRIVATE'],
             'videoContentsId' => null,
             'created_by' => Auth::user()->id,
         ];

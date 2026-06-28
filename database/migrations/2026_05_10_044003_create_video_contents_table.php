@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->integer('created_by');
+            $table->integer('published')->default(1);
             $table->integer('delete_flag')->default(0);
             $table->timestamps();
         });

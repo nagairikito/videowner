@@ -80,6 +80,7 @@ class VideoContentsService extends Service {
                 'title' => $videoContentsDetail['title'],
                 'updatedAt' => $videoContentsDetail['updated_at'],
                 'thumbnailId' => $videoContentsDetail['thumbnail_id'],
+                'publishedFlag' => $videoContentsDetail['published_flag'],
                 'thumbnailName' => $videoContentsDetail['thumbnail_name'],
                 'thumbnailPath' => asset('storage/' . $videoContentsDetail['thumbnail_path']),
                 'videoId' => $videoContentsDetail['video_id'],
@@ -175,14 +176,11 @@ class VideoContentsService extends Service {
                 $this->videoRep->updateVideo($data);
 
                 if($data['thumbnail']['file'] != '' && $data['thumbnail']['path'] == '') {
-                    Log::info('t');
                     $targetThumbnailPath = Bean::getWordFromTarget('thumbnail/', $target['video']['thumbnailPath']);
                     StorageHelper::deleteFileFromStorage($targetThumbnailPath);
                 }
                 
                 if($data['video']['file'] != '' && $data['video']['path'] == '') {
-                    Log::info('v');
-
                     $targetVideoPath = Bean::getWordFromTarget('video/', $target['video']['videoPath']);
                     StorageHelper::deleteFileFromStorage($targetVideoPath);
                 }
@@ -228,6 +226,35 @@ class VideoContentsService extends Service {
 
                 StorageHelper::deleteFileFromStorage($target['thumbnail_path']);
                 StorageHelper::deleteFileFromStorage($target['video_path']);
+            });
+        } catch(Exception $e) {
+            Log::error($e->getMessage());
+            return [false, Message::DELETE_VIDEO_CONTENTS["DELETE_FAIL"]];
+        }
+
+        return [true, Message::DELETE_VIDEO_CONTENTS["DELETE_SUCCESS"]];
+    }
+
+    /**
+     * 動画コンテンツ削除(ソフトデリート)
+     * 
+     * @param array $data 入力情報
+     * @return array 登録結果(成功：true、失敗：false), 成功：ユーザー情報、失敗：エラーメッセージ
+     */
+    public function softDeleteVideoContents(array $data) : array {
+        $target = $this->videoContentsRep->getVideoContentsDetail($data['videoContentsId']);
+
+        if(!$target) {
+            return [false, Message::DELETE_VIDEO_CONTENTS["NOT_FOUND_VIDEO_CONTENTS"]];
+        }
+
+        if($target['user_id'] != Auth::id()) {
+            return [false, Message::DELETE_VIDEO_CONTENTS["MISMATCH_USER_ID"]];
+        }
+
+        try {
+            DB::transaction(function () use ($target) {
+                $this->videoContentsRep->softDeleteVideoContents($target['id']);
             });
         } catch(Exception $e) {
             Log::error($e->getMessage());

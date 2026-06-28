@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use App\Services\VideoContentsService;
-
+use App\Constants\SystemConst;
 
 /**
  * 動画コンテンツ編集 Contorller
@@ -44,6 +44,7 @@ class EditVideoContentsController extends Controller {
                 'path' => $request->video['path'],
             ],
             'videoContentsId' => $request->videoContentsId,
+            'publishedFlag' => $request->publishedFlag ? SystemConst::VIDEO_CONTENTS['PUBLISHED'] : SystemConst::VIDEO_CONTENTS['PRIVATE'],
             'created_by' => Auth::user()->id,
         ];
         $result = $this->service->editVideoContents($data);

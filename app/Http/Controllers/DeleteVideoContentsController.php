@@ -38,4 +38,19 @@ class DeleteVideoContentsController extends Controller {
 
         return $result[0] ? ResponseHelper::responseSuccess($result[1]) : ResponseHelper::responseFailure($result[1]);
     }
+
+    /**
+     * 動画コンテンツ削除(ソフトデリート)
+     * 
+     * @param Request $request リクエスト
+     * @return Object レスポンス
+     */
+    public function softDeleteVideoContents(Request $request) {
+        $data = [
+            'videoContentsId' => $request->videoContentsId
+        ];
+        $result = $this->service->softDeleteVideoContents($data);
+
+        return $result[0] ? ResponseHelper::responseSuccess($result[1]) : ResponseHelper::responseFailure($result[1]);
+    }
 }
